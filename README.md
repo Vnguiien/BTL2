@@ -20,7 +20,19 @@
 </div>
 
 ## 📖 1. Giới thiệu
-Platform ERP được áp dụng vào học phần Thực tập doanh nghiệp dựa trên mã nguồn mở Odoo. 
+Hệ thống quản lý văn bản – Khách hàng được xây dựng trên nền tảng Odoo ERP, thúc đẩy tối ưu hóa công tác quản lý văn bản, thông tin khách hàng và điều phối nhân sự trong tổ chức.
+
+Thay vì quản lý dọn dẹp bằng giấy tờ hoặc các tập tin độc lập, hệ thống cung cấp một giải pháp tập trung, hỗ trợ:
+
+Các chức năng chính của hệ thống:
+
+Quản lý Văn bản: Phân loại tài liệu (Hợp đồng, Báo cáo), theo dõi công văn đến/đi và trạng thái lưu trữ.
+
+Quản lý khách hàng (CRM): Lưu trữ thông tin đối tác, lịch sử giao dịch và các bản văn liên kết ký kết.
+
+Quản lý Nhân sự: Điều phối viên phụ trách từng công việc đầu tiên và theo dõi quá trình xử lý văn bản.
+
+Trợ lý ảo AI: Tích hợp Chatbot Gemini hỗ trợ tìm kiếm văn bản nhanh và giải đáp dịch vụ. 
 
 ## 🔧 2. Các công nghệ được sử dụng
 <div align="center">
@@ -36,12 +48,8 @@ Platform ERP được áp dụng vào học phần Thực tập doanh nghiệp d
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 </div>
 
-## 🚀 3. Các project đã thực hiện dựa trên Platform
+## 🚀 3. Các chức năng chính
 
-Một số project sinh viên đã thực hiện:
-- #### [Khoá 15](./docs/projects/K15/README.md)
-- #### [Khoá 16](./docs/projects/K16/README.md)
-- #### [Khoá 17](./docs/projects/K17/README.md)
 ## ⚙️ 4. Cài đặt
 
 ### 4.1. Cài đặt công cụ, môi trường và các thư viện cần thiết
