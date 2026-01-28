@@ -49,8 +49,22 @@ Trợ lý ảo AI: Tích hợp Chatbot Gemini hỗ trợ tìm kiếm văn bản 
 </div>
 
 ## 🚀 3. Các chức năng chính
-Quản lý nhân viên 
+## Quản lý nhân viên 
+
 <img width="1902" height="819" alt="image" src="https://github.com/user-attachments/assets/8ecef215-45f4-423b-a5c6-7e0ff58bb1aa" />
+
+## Quản lý khách hàng
+
+<img width="1901" height="902" alt="image" src="https://github.com/user-attachments/assets/c97b1e91-7f79-4ec4-b149-e31474418300" />
+
+## Quản lý Văn Bản
+
+<img width="1912" height="905" alt="image" src="https://github.com/user-attachments/assets/285183fd-d7bd-481e-8de2-ff27fa67372d" />
+
+## Cấu hình AI
+
+
+<img width="1902" height="912" alt="image" src="https://github.com/user-attachments/assets/b44aaa37-3cc5-4625-9525-6df8ec5b7108" />
 
 
 ## ⚙️ 4. Cài đặt
