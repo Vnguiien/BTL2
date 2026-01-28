@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Extend Customer Form với AI Tab -->
+        <record id="view_customer_form_ai" model="ir.ui.view">
+            <field name="name">customer.form.ai</field>
+            <field name="model">customer</field>
+            <field name="inherit_id" ref="quan_ly_khach_hang.view_customer_form"/>
+            <field name="arch" type="xml">
+                <!-- Thêm AI buttons vào button box -->
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="action_ai_analyze_customer" type="object" 
+                            class="oe_stat_button"
+                            title="AI Phân tích khách hàng">
+                        <span class="o_stat_text">AI Phân tích</span>
+                    </button>
+                </xpath>
+                
+                <!-- Thêm Tab AI Assistant -->
+                <xpath expr="//notebook" position="inside">
+                    <page string="AI Assistant" name="ai_assistant">
+                        <group>
+                            <div class="alert alert-info" role="alert">
+                                <strong>AI Assistant</strong> - Trợ lý thông minh giúp bạn:
+                                <ul class="mb-0">
+                                    <li>Phân tích khách hàng và đề xuất chiến lược</li>
+                                    <li>Tạo nội dung email tự động</li>
+                                    <li>Đề xuất hành động follow-up</li>
+                                </ul>
+                            </div>
+                        </group>
+                        <group>
+                            <group>
+                                <button name="action_ai_suggest_email" type="object" 
+                                        string="AI Đề xuất Email" class="btn-primary mb-2"/>
+                                <button name="action_ai_suggest_follow_up" type="object" 
+                                        string="AI Đề xuất Follow-up" class="btn-primary mb-2"/>
+                                <button name="action_ai_analyze_customer" type="object" 
+                                        string="AI Phân tích Khách hàng" class="btn-primary mb-2"/>
+                            </group>
+                            <group>
+                                <field name="ai_last_update" readonly="1"/>
+                            </group>
+                        </group>
+                        
+                        <group string="Đề xuất Email từ AI">
+                            <field name="ai_email_suggestion" nolabel="1" readonly="1"/>
+                        </group>
+                        
+                        <group string="Đề xuất Follow-up từ AI">
+                            <field name="ai_follow_up_suggestion" nolabel="1" readonly="1"/>
+                        </group>
+                        
+                        <group string="Phân tích AI">
+                            <field name="ai_analysis" nolabel="1" readonly="1"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

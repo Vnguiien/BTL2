@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="view_marketing_campaign_form" model="ir.ui.view">
+            <field name="name">marketing_campaign.form</field>
+            <field name="model">marketing_campaign</field>
+            <field name="arch" type="xml">
+                <form string="Chiến dịch Marketing">
+                    <header>
+                        <button name="action_plan" string="Lên kế hoạch" type="object" 
+                                class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_start" string="Bắt đầu" type="object" 
+                                class="btn-primary" attrs="{'invisible': [('state', '!=', 'planned')]}"/>
+                        <button name="action_complete" string="Hoàn thành" type="object" 
+                                class="btn-success" attrs="{'invisible': [('state', '!=', 'running')]}"/>
+                        <button name="action_cancel" string="Hủy" type="object" 
+                                attrs="{'invisible': [('state', 'not in', ['draft', 'planned'])]}"/>
+                        <field name="state" widget="statusbar" 
+                               statusbar_visible="draft,planned,running,completed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" icon="fa-users">
+                                <field name="customer_count" widget="statinfo" string="Khách hàng"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="marketing_campaign_id"/>
+                            <h1>
+                                <field name="marketing_campaign_id" placeholder="Mã chiến dịch"/>
+                            </h1>
+                            <h2>
+                                <field name="marketing_campaign_name" placeholder="Tên chiến dịch"/>
+                            </h2>
+                        </div>
+                        <group>
+                            <group string="Thông tin chung">
+                                <field name="nhan_vien_id" options="{'no_create': True}"/>
+                                <field name="channel"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                            </group>
+                            <group string="Ngân sách">
+                                <field name="budget" widget="monetary"/>
+                                <field name="actual_cost" widget="monetary"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Mô tả" name="description">
+                                <field name="description" placeholder="Mô tả chiến dịch..."/>
+                            </page>
+                            <page string="Đội ngũ thực hiện" name="team">
+                                <field name="team_ids" widget="many2many_tags"/>
+                            </page>
+                            <page string="Khách hàng mục tiêu" name="customers">
+                                <field name="customer_ids">
+                                    <tree>
+                                        <field name="customer_id"/>
+                                        <field name="customer_name"/>
+                                        <field name="email"/>
+                                        <field name="phone"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Kết quả" name="results" 
+                                  attrs="{'invisible': [('state', 'not in', ['running', 'completed'])]}">
+                                <group>
+                                    <field name="target_reach"/>
+                                    <field name="actual_reach"/>
+                                    <field name="conversion_rate"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="view_marketing_campaign_tree" model="ir.ui.view">
+            <field name="name">marketing_campaign.tree</field>
+            <field name="model">marketing_campaign</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách chiến dịch">
+                    <field name="marketing_campaign_id"/>
+                    <field name="marketing_campaign_name"/>
+                    <field name="nhan_vien_id"/>
+                    <field name="channel"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="budget" widget="monetary"/>
+                    <field name="customer_count"/>
+                    <field name="state" widget="badge" 
+                           decoration-success="state == 'completed'"
+                           decoration-info="state == 'running'"
+                           decoration-warning="state == 'planned'"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record model="ir.ui.view" id="marketing_campaign_search">
+            <field name="name">marketing_campaign.search</field>
+            <field name="model">marketing_campaign</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm chiến dịch">
+                    <field name="marketing_campaign_id"/>
+                    <field name="marketing_campaign_name"/>
+                    <field name="nhan_vien_id"/>
+                    <separator/>
+                    <filter string="Đang chạy" name="running" domain="[('state', '=', 'running')]"/>
+                    <filter string="Đã lên kế hoạch" name="planned" domain="[('state', '=', 'planned')]"/>
+                    <filter string="Hoàn thành" name="completed" domain="[('state', '=', 'completed')]"/>
+                    <separator/>
+                    <group expand="0" string="Nhóm theo">
+                        <filter string="Nhân viên" name="group_employee" context="{'group_by': 'nhan_vien_id'}"/>
+                        <filter string="Kênh" name="group_channel" context="{'group_by': 'channel'}"/>
+                        <filter string="Trạng thái" name="group_state" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_marketing_campaign" model="ir.actions.act_window">
+            <field name="name">Chiến dịch Marketing</field>
+            <field name="res_model">marketing_campaign</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="marketing_campaign_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo chiến dịch marketing mới
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="view_phong_ban_form" model="ir.ui.view">
+            <field name="name">phong_ban.form</field>
+            <field name="model">phong_ban</field>
+            <field name="arch" type="xml">
+                <form string="Phòng ban">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="%(nhan_su.action_nhan_vien)d" type="action" 
+                                    class="oe_stat_button" icon="fa-users"
+                                    context="{'search_default_phong_ban_id': active_id}">
+                                <field name="so_luong_nhan_vien" widget="statinfo" string="Nhân viên"/>
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" 
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+                        <div class="oe_title">
+                            <label for="ma_phong_ban"/>
+                            <h1>
+                                <field name="ma_phong_ban" placeholder="Mã phòng ban"/>
+                            </h1>
+                            <h2>
+                                <field name="ten_phong_ban" placeholder="Tên phòng ban"/>
+                            </h2>
+                        </div>
+                        <group>
+                            <group string="Thông tin chung">
+                                <field name="complete_name" readonly="1"/>
+                                <field name="parent_id" options="{'no_create': True}"/>
+                                <field name="truong_phong_id" options="{'no_create': True}"
+                                       domain="[('phong_ban_id', '=', id)]"/>
+                                <field name="sequence"/>
+                                <field name="active" invisible="1"/>
+                            </group>
+                            <group string="Mô tả">
+                                <field name="mo_ta" nolabel="1" placeholder="Mô tả về phòng ban..."/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Phòng ban con" name="children" 
+                                  attrs="{'invisible': [('child_ids', '=', [])]}">
+                                <field name="child_ids">
+                                    <tree>
+                                        <field name="ma_phong_ban"/>
+                                        <field name="ten_phong_ban"/>
+                                        <field name="truong_phong_id"/>
+                                        <field name="so_luong_nhan_vien"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Danh sách nhân viên" name="employees">
+                                <field name="nhan_vien_ids">
+                                    <tree>
+                                        <field name="ma_dinh_danh"/>
+                                        <field name="ho_ten"/>
+                                        <field name="chuc_vu_id"/>
+                                        <field name="email"/>
+                                        <field name="so_dien_thoai"/>
+                                        <field name="trang_thai" widget="badge"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="view_phong_ban_tree" model="ir.ui.view">
+            <field name="name">phong_ban.tree</field>
+            <field name="model">phong_ban</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách phòng ban">
+                    <field name="sequence" widget="handle"/>
+                    <field name="ma_phong_ban"/>
+                    <field name="ten_phong_ban"/>
+                    <field name="parent_id"/>
+                    <field name="truong_phong_id"/>
+                    <field name="so_luong_nhan_vien"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record model="ir.ui.view" id="phong_ban_search">
+            <field name="name">phong_ban.search</field>
+            <field name="model">phong_ban</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm phòng ban">
+                    <field name="ma_phong_ban"/>
+                    <field name="ten_phong_ban"/>
+                    <field name="truong_phong_id"/>
+                    <separator/>
+                    <filter string="Phòng ban gốc" name="root_departments" domain="[('parent_id', '=', False)]"/>
+                    <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                    <separator/>
+                    <group expand="0" string="Nhóm theo">
+                        <filter string="Phòng ban cấp trên" name="group_parent" context="{'group_by': 'parent_id'}"/>
+                        <filter string="Trưởng phòng" name="group_manager" context="{'group_by': 'truong_phong_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_phong_ban" model="ir.actions.act_window">
+            <field name="name">Phòng ban</field>
+            <field name="res_model">phong_ban</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="phong_ban_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo phòng ban mới
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

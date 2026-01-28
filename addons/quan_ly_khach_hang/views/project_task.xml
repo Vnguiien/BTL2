@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="view_project_task_form" model="ir.ui.view">
+            <field name="name">project_task.form</field>
+            <field name="model">project_task</field>
+            <field name="arch" type="xml">
+                <form string="Nhiệm vụ">
+                    <header>
+                        <button name="action_start" string="Bắt đầu" type="object" 
+                                class="btn-primary" attrs="{'invisible': [('state', '!=', 'new')]}"/>
+                        <button name="action_done" string="Hoàn thành" type="object" 
+                                class="btn-success" attrs="{'invisible': [('state', '!=', 'in_progress')]}"/>
+                        <button name="action_cancel" string="Hủy" type="object" 
+                                attrs="{'invisible': [('state', 'not in', ['new', 'in_progress'])]}"/>
+                        <field name="state" widget="statusbar" 
+                               statusbar_visible="new,in_progress,done"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Quá hạn" bg_color="bg-danger" 
+                                attrs="{'invisible': [('is_overdue', '=', False)]}"/>
+                        <div class="oe_title">
+                            <label for="project_task_id"/>
+                            <h1>
+                                <field name="project_task_id" placeholder="Mã nhiệm vụ"/>
+                            </h1>
+                            <h2>
+                                <field name="name" placeholder="Tên nhiệm vụ"/>
+                            </h2>
+                        </div>
+                        <group>
+                            <group string="Thông tin chung">
+                                <field name="customer_id" options="{'no_create': True}"/>
+                                <field name="nhan_vien_id" options="{'no_create': True}"/>
+                                <field name="priority"/>
+                            </group>
+                            <group string="Thời gian">
+                                <field name="deadline"/>
+                                <field name="actual_completion_date" 
+                                       attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                                <field name="days_remaining" 
+                                       attrs="{'invisible': [('state', '=', 'done')]}"/>
+                                <field name="is_overdue" invisible="1"/>
+                            </group>
+                        </group>
+                        <group string="Mô tả chi tiết">
+                            <field name="description" nolabel="1" placeholder="Mô tả chi tiết nhiệm vụ..."/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="view_project_task_tree" model="ir.ui.view">
+            <field name="name">project_task.tree</field>
+            <field name="model">project_task</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách nhiệm vụ" decoration-danger="is_overdue == True"
+                      decoration-success="state == 'done'" decoration-muted="state == 'cancelled'">
+                    <field name="project_task_id"/>
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="nhan_vien_id"/>
+                    <field name="priority"/>
+                    <field name="deadline"/>
+                    <field name="days_remaining"/>
+                    <field name="state" widget="badge" 
+                           decoration-success="state == 'done'"
+                           decoration-info="state == 'in_progress'"
+                           decoration-warning="state == 'new'"/>
+                    <field name="is_overdue" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record model="ir.ui.view" id="project_task_search">
+            <field name="name">project_task.search</field>
+            <field name="model">project_task</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm nhiệm vụ">
+                    <field name="project_task_id"/>
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="nhan_vien_id"/>
+                    <separator/>
+                    <filter string="Đang thực hiện" name="in_progress" domain="[('state', '=', 'in_progress')]"/>
+                    <filter string="Chưa hoàn thành" name="not_done" domain="[('state', 'in', ['new', 'in_progress'])]"/>
+                    <filter string="Quá hạn" name="overdue" domain="[('is_overdue', '=', True)]"/>
+                    <separator/>
+                    <filter string="Ưu tiên cao" name="high_priority" domain="[('priority', 'in', ['2', '3'])]"/>
+                    <separator/>
+                    <group expand="0" string="Nhóm theo">
+                        <filter string="Khách hàng" name="group_customer" context="{'group_by': 'customer_id'}"/>
+                        <filter string="Nhân viên" name="group_employee" context="{'group_by': 'nhan_vien_id'}"/>
+                        <filter string="Trạng thái" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Ưu tiên" name="group_priority" context="{'group_by': 'priority'}"/>
+                        <filter string="Deadline" name="group_deadline" context="{'group_by': 'deadline:month'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_project_task" model="ir.actions.act_window">
+            <field name="name">Nhiệm vụ</field>
+            <field name="res_model">project_task</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="project_task_search"/>
+            <field name="context">{'search_default_not_done': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo nhiệm vụ mới
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

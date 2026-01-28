@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Demo Khách hàng -->
+        <record id="customer_1" model="customer">
+            <field name="customer_id">KH001</field>
+            <field name="customer_name">Công ty TNHH ABC</field>
+            <field name="email">contact@abc.com</field>
+            <field name="phone">0281234567</field>
+            <field name="address">123 Nguyễn Huệ, Quận 1, TP.HCM</field>
+            <field name="customer_type">company</field>
+            <field name="company_name">Công ty TNHH ABC</field>
+            <field name="tax_code">0123456789</field>
+            <field name="customer_status">active</field>
+        </record>
+
+        <record id="customer_2" model="customer">
+            <field name="customer_id">KH002</field>
+            <field name="customer_name">Tập đoàn XYZ</field>
+            <field name="email">info@xyz.com</field>
+            <field name="phone">0287654321</field>
+            <field name="address">456 Lê Lợi, Quận 3, TP.HCM</field>
+            <field name="customer_type">company</field>
+            <field name="company_name">Tập đoàn XYZ</field>
+            <field name="tax_code">9876543210</field>
+            <field name="customer_status">active</field>
+        </record>
+
+        <record id="customer_3" model="customer">
+            <field name="customer_id">KH003</field>
+            <field name="customer_name">Nguyễn Văn Minh</field>
+            <field name="email">nguyenvanminh@gmail.com</field>
+            <field name="phone">0901234567</field>
+            <field name="address">789 Trần Hưng Đạo, Quận 5, TP.HCM</field>
+            <field name="customer_type">individual</field>
+            <field name="gender">male</field>
+            <field name="date_of_birth">1985-05-15</field>
+            <field name="income_level">50-70tr</field>
+            <field name="customer_status">active</field>
+        </record>
+
+        <record id="customer_4" model="customer">
+            <field name="customer_id">KH004</field>
+            <field name="customer_name">Trần Thị Lan</field>
+            <field name="email">tranthilan@gmail.com</field>
+            <field name="phone">0908765432</field>
+            <field name="address">321 Võ Văn Tần, Quận 3, TP.HCM</field>
+            <field name="customer_type">individual</field>
+            <field name="gender">female</field>
+            <field name="date_of_birth">1990-08-20</field>
+            <field name="income_level">20-50tr</field>
+            <field name="customer_status">active</field>
+        </record>
+
+        <record id="customer_5" model="customer">
+            <field name="customer_id">KH005</field>
+            <field name="customer_name">Công ty CP DEF</field>
+            <field name="email">sales@def.com</field>
+            <field name="phone">0283456789</field>
+            <field name="address">567 Điện Biên Phủ, Quận Bình Thạnh, TP.HCM</field>
+            <field name="customer_type">company</field>
+            <field name="company_name">Công ty Cổ phần DEF</field>
+            <field name="tax_code">5678901234</field>
+            <field name="customer_status">new</field>
+        </record>
+
+        <!-- Demo Giai đoạn CRM (chỉ có field name, sequence, fold, probability) -->
+        <record id="stage_new" model="crm_stage">
+            <field name="name">Mới</field>
+            <field name="sequence">1</field>
+            <field name="probability">10</field>
+            <field name="fold" eval="False"/>
+        </record>
+
+        <record id="stage_qualify" model="crm_stage">
+            <field name="name">Đã xác minh</field>
+            <field name="sequence">2</field>
+            <field name="probability">25</field>
+            <field name="fold" eval="False"/>
+        </record>
+
+        <record id="stage_proposal" model="crm_stage">
+            <field name="name">Đang đề xuất</field>
+            <field name="sequence">3</field>
+            <field name="probability">50</field>
+            <field name="fold" eval="False"/>
+        </record>
+
+        <record id="stage_negotiation" model="crm_stage">
+            <field name="name">Đang thương lượng</field>
+            <field name="sequence">4</field>
+            <field name="probability">75</field>
+            <field name="fold" eval="False"/>
+        </record>
+
+        <record id="stage_won" model="crm_stage">
+            <field name="name">Thắng</field>
+            <field name="sequence">5</field>
+            <field name="probability">100</field>
+            <field name="fold" eval="True"/>
+        </record>
+
+        <record id="stage_lost" model="crm_stage">
+            <field name="name">Thua</field>
+            <field name="sequence">6</field>
+            <field name="probability">0</field>
+            <field name="fold" eval="True"/>
+        </record>
+
+        <!-- Demo Cơ hội bán hàng -->
+        <record id="lead_1" model="crm_lead">
+            <field name="crm_lead_id">CH001</field>
+            <field name="crm_lead_name">Triển khai hệ thống ERP cho ABC</field>
+            <field name="customer_id" ref="customer_1"/>
+            <field name="stage_id" ref="stage_proposal"/>
+            <field name="expected_revenue">300000000</field>
+        </record>
+
+        <record id="lead_2" model="crm_lead">
+            <field name="crm_lead_id">CH002</field>
+            <field name="crm_lead_name">Dự án phần mềm quản lý XYZ</field>
+            <field name="customer_id" ref="customer_2"/>
+            <field name="stage_id" ref="stage_won"/>
+            <field name="expected_revenue">550000000</field>
+        </record>
+
+        <record id="lead_3" model="crm_lead">
+            <field name="crm_lead_id">CH003</field>
+            <field name="crm_lead_name">Tư vấn chuyển đổi số DEF</field>
+            <field name="customer_id" ref="customer_5"/>
+            <field name="stage_id" ref="stage_new"/>
+            <field name="expected_revenue">150000000</field>
+        </record>
+
+        <record id="lead_4" model="crm_lead">
+            <field name="crm_lead_id">CH004</field>
+            <field name="crm_lead_name">Gói dịch vụ cá nhân Minh</field>
+            <field name="customer_id" ref="customer_3"/>
+            <field name="stage_id" ref="stage_negotiation"/>
+            <field name="expected_revenue">50000000</field>
+        </record>
+
+        <!-- Demo Tương tác khách hàng -->
+        <record id="interact_1" model="crm_interact">
+            <field name="crm_interact_id">TT001</field>
+            <field name="crm_interact_name">Cuộc gọi giới thiệu sản phẩm</field>
+            <field name="customer_id" ref="customer_1"/>
+            <field name="interaction_type">call</field>
+            <field name="duration">30</field>
+            <field name="note">Khách hàng quan tâm đến giải pháp ERP, hẹn gặp demo</field>
+            <field name="result">positive</field>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_3"/>
+            <field name="next_action">Chuẩn bị demo sản phẩm</field>
+        </record>
+
+        <record id="interact_2" model="crm_interact">
+            <field name="crm_interact_id">TT002</field>
+            <field name="crm_interact_name">Demo sản phẩm tại ABC</field>
+            <field name="customer_id" ref="customer_1"/>
+            <field name="interaction_type">demo</field>
+            <field name="duration">120</field>
+            <field name="note">Demo thành công, khách hàng yêu cầu gửi báo giá</field>
+            <field name="result">positive</field>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_3"/>
+            <field name="next_action">Gửi báo giá trong 3 ngày</field>
+        </record>
+
+        <record id="interact_3" model="crm_interact">
+            <field name="crm_interact_id">TT003</field>
+            <field name="crm_interact_name">Họp ký hợp đồng XYZ</field>
+            <field name="customer_id" ref="customer_2"/>
+            <field name="interaction_type">meeting</field>
+            <field name="duration">90</field>
+            <field name="note">Ký hợp đồng thành công, giá trị 550 triệu</field>
+            <field name="result">positive</field>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_3"/>
+        </record>
+
+        <record id="interact_4" model="crm_interact">
+            <field name="crm_interact_id">TT004</field>
+            <field name="crm_interact_name">Email giới thiệu dịch vụ</field>
+            <field name="customer_id" ref="customer_5"/>
+            <field name="interaction_type">email</field>
+            <field name="note">Gửi email giới thiệu dịch vụ tư vấn chuyển đổi số</field>
+            <field name="result">neutral</field>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_6"/>
+            <field name="next_action">Gọi điện follow-up sau 3 ngày</field>
+        </record>
+
+        <!-- Demo Báo giá -->
+        <record id="quotation_1" model="quotation">
+            <field name="quotation_id">BG001</field>
+            <field name="customer_id" ref="customer_1"/>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_3"/>
+            <field name="validity_date">2026-03-01</field>
+            <field name="payment_term">30_days</field>
+            <field name="state">sent</field>
+            <field name="terms_conditions">Điều khoản thanh toán: 50% khi ký, 50% khi nghiệm thu</field>
+        </record>
+
+        <record id="quotation_2" model="quotation">
+            <field name="quotation_id">BG002</field>
+            <field name="customer_id" ref="customer_2"/>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_3"/>
+            <field name="validity_date">2026-02-15</field>
+            <field name="payment_term">45_days</field>
+            <field name="state">accepted</field>
+            <field name="terms_conditions">Thanh toán theo tiến độ: 30-40-30</field>
+        </record>
+
+        <record id="quotation_3" model="quotation">
+            <field name="quotation_id">BG003</field>
+            <field name="customer_id" ref="customer_3"/>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_6"/>
+            <field name="validity_date">2026-02-28</field>
+            <field name="payment_term">immediate</field>
+            <field name="state">draft</field>
+        </record>
+
+        <!-- Demo Đơn hàng -->
+        <record id="sale_order_1" model="sale_order">
+            <field name="sale_order_id">DH001</field>
+            <field name="sale_order_name">Đơn hàng triển khai ERP - ABC</field>
+            <field name="customer_id" ref="customer_1"/>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_3"/>
+            <field name="payment_method">bank_transfer</field>
+            <field name="payment_state">partial</field>
+            <field name="state">processing</field>
+            <field name="quotation_id" ref="quotation_1"/>
+            <field name="note">Đang triển khai giai đoạn 1</field>
+        </record>
+
+        <record id="sale_order_2" model="sale_order">
+            <field name="sale_order_id">DH002</field>
+            <field name="sale_order_name">Đơn hàng phần mềm - XYZ</field>
+            <field name="customer_id" ref="customer_2"/>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_3"/>
+            <field name="payment_method">bank_transfer</field>
+            <field name="payment_state">paid</field>
+            <field name="state">completed</field>
+            <field name="quotation_id" ref="quotation_2"/>
+            <field name="note">Hoàn thành và bàn giao</field>
+        </record>
+
+        <!-- Demo Hợp đồng khách hàng -->
+        <record id="contract_1" model="contract">
+            <field name="contract_id">HD-KH001</field>
+            <field name="contract_name">Hợp đồng triển khai ERP - ABC</field>
+            <field name="customer_id" ref="customer_1"/>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_3"/>
+            <field name="contract_type">service</field>
+            <field name="start_date">2026-01-15</field>
+            <field name="end_date">2026-07-15</field>
+            <field name="contract_value">300000000</field>
+            <field name="state">active</field>
+            <field name="payment_term">milestone</field>
+            <field name="terms">Thanh toán 50% khi ký, 50% khi nghiệm thu</field>
+        </record>
+
+        <record id="contract_2" model="contract">
+            <field name="contract_id">HD-KH002</field>
+            <field name="contract_name">Hợp đồng phần mềm - XYZ</field>
+            <field name="customer_id" ref="customer_2"/>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_3"/>
+            <field name="contract_type">service</field>
+            <field name="start_date">2025-06-01</field>
+            <field name="end_date">2025-12-31</field>
+            <field name="contract_value">550000000</field>
+            <field name="state">ended</field>
+            <field name="payment_term">milestone</field>
+            <field name="terms">Thanh toán theo tiến độ 30-40-30</field>
+        </record>
+
+        <record id="contract_3" model="contract">
+            <field name="contract_id">HD-KH003</field>
+            <field name="contract_name">Hợp đồng bảo trì - ABC</field>
+            <field name="customer_id" ref="customer_1"/>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_5"/>
+            <field name="contract_type">maintenance</field>
+            <field name="start_date">2026-07-16</field>
+            <field name="end_date">2027-07-15</field>
+            <field name="contract_value">60000000</field>
+            <field name="state">draft</field>
+            <field name="payment_term">quarterly</field>
+            <field name="terms">Thanh toán hàng quý</field>
+        </record>
+
+        <!-- Demo Nhiệm vụ -->
+        <record id="task_1" model="project_task">
+            <field name="project_task_id">NV001</field>
+            <field name="name">Khảo sát yêu cầu khách hàng ABC</field>
+            <field name="customer_id" ref="customer_1"/>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_3"/>
+            <field name="description">Khảo sát chi tiết yêu cầu triển khai ERP cho ABC</field>
+            <field name="deadline">2026-02-15</field>
+            <field name="priority">2</field>
+            <field name="state">in_progress</field>
+        </record>
+
+        <record id="task_2" model="project_task">
+            <field name="project_task_id">NV002</field>
+            <field name="name">Chuẩn bị demo cho DEF</field>
+            <field name="customer_id" ref="customer_5"/>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_6"/>
+            <field name="description">Chuẩn bị tài liệu và môi trường demo cho khách hàng DEF</field>
+            <field name="deadline">2026-02-10</field>
+            <field name="priority">1</field>
+            <field name="state">new</field>
+        </record>
+
+        <record id="task_3" model="project_task">
+            <field name="project_task_id">NV003</field>
+            <field name="name">Bàn giao dự án XYZ</field>
+            <field name="customer_id" ref="customer_2"/>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_5"/>
+            <field name="description">Hoàn tất bàn giao và đào tạo cho XYZ</field>
+            <field name="deadline">2025-12-30</field>
+            <field name="actual_completion_date">2025-12-28</field>
+            <field name="priority">3</field>
+            <field name="state">done</field>
+        </record>
+
+        <!-- Demo Ghi chú -->
+        <record id="note_1" model="note">
+            <field name="note_id">GC001</field>
+            <field name="note_name">Yêu cầu đặc biệt của ABC</field>
+            <field name="customer_id" ref="customer_1"/>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_3"/>
+            <field name="note">Khách hàng yêu cầu tích hợp với hệ thống kế toán hiện tại. Cần làm rõ API và format dữ liệu.</field>
+            <field name="note_type">important</field>
+            <field name="is_pinned" eval="True"/>
+        </record>
+
+        <record id="note_2" model="note">
+            <field name="note_id">GC002</field>
+            <field name="note_name">Liên hệ chính tại XYZ</field>
+            <field name="customer_id" ref="customer_2"/>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_3"/>
+            <field name="note">Người liên hệ chính: Anh Tuấn - Giám đốc IT. SĐT: 0901xxx888</field>
+            <field name="note_type">general</field>
+        </record>
+
+        <record id="note_3" model="note">
+            <field name="note_id">GC003</field>
+            <field name="note_name">Follow-up khách hàng DEF</field>
+            <field name="customer_id" ref="customer_5"/>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_6"/>
+            <field name="note">Cần gọi điện lại trong tuần tới để theo dõi phản hồi từ email giới thiệu</field>
+            <field name="note_type">follow_up</field>
+        </record>
+
+        <!-- Demo Phản hồi khách hàng -->
+        <record id="feedback_1" model="feedback">
+            <field name="feedback_id">PH001</field>
+            <field name="feedback_name">Đánh giá dịch vụ triển khai</field>
+            <field name="customer_id" ref="customer_2"/>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_3"/>
+            <field name="feedback">Dịch vụ triển khai rất chuyên nghiệp, đội ngũ hỗ trợ nhiệt tình. Sản phẩm đáp ứng đúng yêu cầu.</field>
+            <field name="rating">5</field>
+            <field name="feedback_type">service</field>
+            <field name="state">closed</field>
+            <field name="response">Cảm ơn quý khách đã tin tưởng sử dụng dịch vụ. Chúng tôi sẽ tiếp tục nỗ lực để phục vụ tốt hơn.</field>
+        </record>
+
+        <record id="feedback_2" model="feedback">
+            <field name="feedback_id">PH002</field>
+            <field name="feedback_name">Góp ý về tốc độ phản hồi</field>
+            <field name="customer_id" ref="customer_1"/>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_6"/>
+            <field name="feedback">Tốc độ phản hồi các yêu cầu hỗ trợ cần được cải thiện, đôi khi phải chờ đến 2 ngày.</field>
+            <field name="rating">3</field>
+            <field name="feedback_type">support</field>
+            <field name="state">processing</field>
+        </record>
+
+        <record id="feedback_3" model="feedback">
+            <field name="feedback_id">PH003</field>
+            <field name="feedback_name">Đánh giá sản phẩm</field>
+            <field name="customer_id" ref="customer_3"/>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_6"/>
+            <field name="feedback">Sản phẩm tốt, giao diện dễ sử dụng. Tuy nhiên cần thêm một số tính năng báo cáo.</field>
+            <field name="rating">4</field>
+            <field name="feedback_type">product</field>
+            <field name="state">resolved</field>
+            <field name="response">Cảm ơn góp ý của anh/chị. Chúng tôi đã ghi nhận và sẽ bổ sung trong phiên bản tiếp theo.</field>
+        </record>
+
+        <!-- Demo Chiến dịch Marketing -->
+        <record id="campaign_1" model="marketing_campaign">
+            <field name="marketing_campaign_id">MKT001</field>
+            <field name="marketing_campaign_name">Chiến dịch Email Tết 2026</field>
+            <field name="description">Gửi email chúc mừng năm mới và giới thiệu ưu đãi đầu năm</field>
+            <field name="start_date">2026-01-15</field>
+            <field name="end_date">2026-02-15</field>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_6"/>
+            <field name="channel">email</field>
+            <field name="budget">15000000</field>
+            <field name="actual_cost">12000000</field>
+            <field name="target_reach">500</field>
+            <field name="actual_reach">480</field>
+            <field name="conversion_rate">8.5</field>
+            <field name="state">running</field>
+        </record>
+
+        <record id="campaign_2" model="marketing_campaign">
+            <field name="marketing_campaign_id">MKT002</field>
+            <field name="marketing_campaign_name">Hội thảo chuyển đổi số 2026</field>
+            <field name="description">Tổ chức hội thảo giới thiệu giải pháp chuyển đổi số cho doanh nghiệp</field>
+            <field name="start_date">2026-03-01</field>
+            <field name="end_date">2026-03-01</field>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_3"/>
+            <field name="channel">event</field>
+            <field name="budget">50000000</field>
+            <field name="target_reach">100</field>
+            <field name="state">planned</field>
+        </record>
+
+        <record id="campaign_3" model="marketing_campaign">
+            <field name="marketing_campaign_id">MKT003</field>
+            <field name="marketing_campaign_name">Quảng cáo Facebook Q1/2026</field>
+            <field name="description">Chạy quảng cáo trên Facebook nhắm đến doanh nghiệp SME</field>
+            <field name="start_date">2026-01-01</field>
+            <field name="end_date">2026-03-31</field>
+            <field name="nhan_vien_id" ref="nhan_su.nhan_vien_6"/>
+            <field name="channel">social</field>
+            <field name="budget">30000000</field>
+            <field name="actual_cost">8000000</field>
+            <field name="target_reach">10000</field>
+            <field name="actual_reach">3500</field>
+            <field name="conversion_rate">2.5</field>
+            <field name="state">running</field>
+        </record>
+
+    </data>
+</odoo>

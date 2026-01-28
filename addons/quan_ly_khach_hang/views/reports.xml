@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ============================================ -->
+        <!-- DASHBOARD KHÁCH HÀNG                         -->
+        <!-- ============================================ -->
+
+        <!-- Dashboard Action - CRM Overview -->
+        <record id="action_crm_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard CRM</field>
+            <field name="res_model">crm_lead</field>
+            <field name="view_mode">kanban,tree,form,graph,pivot</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Chào mừng đến Dashboard CRM
+                </p>
+                <p>
+                    Quản lý cơ hội bán hàng và theo dõi pipeline
+                </p>
+            </field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- BÁO CÁO CƠ HỘI BÁN HÀNG                      -->
+        <!-- ============================================ -->
+        
+        <!-- Cơ hội theo giai đoạn - Pivot -->
+        <record id="view_crm_lead_stage_pivot" model="ir.ui.view">
+            <field name="name">crm.lead.stage.pivot</field>
+            <field name="model">crm_lead</field>
+            <field name="arch" type="xml">
+                <pivot string="Cơ hội theo Giai đoạn">
+                    <field name="stage_id" type="row"/>
+                    <field name="expected_revenue" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_crm_lead_stage_graph" model="ir.ui.view">
+            <field name="name">crm.lead.stage.graph</field>
+            <field name="model">crm_lead</field>
+            <field name="arch" type="xml">
+                <graph string="Pipeline Cơ hội" type="bar">
+                    <field name="stage_id"/>
+                    <field name="expected_revenue" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_crm_pipeline" model="ir.actions.act_window">
+            <field name="name">Pipeline Cơ hội</field>
+            <field name="res_model">crm_lead</field>
+            <field name="view_mode">graph,pivot,tree</field>
+            <field name="view_id" ref="view_crm_lead_stage_graph"/>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- BÁO CÁO DOANH THU                            -->
+        <!-- ============================================ -->
+
+        <!-- Doanh thu theo khách hàng - Pivot -->
+        <record id="view_contract_revenue_pivot" model="ir.ui.view">
+            <field name="name">contract.revenue.pivot</field>
+            <field name="model">contract</field>
+            <field name="arch" type="xml">
+                <pivot string="Doanh thu theo Khách hàng">
+                    <field name="customer_id" type="row"/>
+                    <field name="contract_type" type="col"/>
+                    <field name="contract_value" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_contract_revenue_graph" model="ir.ui.view">
+            <field name="name">contract.revenue.graph</field>
+            <field name="model">contract</field>
+            <field name="arch" type="xml">
+                <graph string="Doanh thu theo Khách hàng" type="bar">
+                    <field name="customer_id"/>
+                    <field name="contract_value" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_revenue_customer" model="ir.actions.act_window">
+            <field name="name">Doanh thu theo Khách hàng</field>
+            <field name="res_model">contract</field>
+            <field name="view_mode">graph,pivot,tree</field>
+            <field name="view_id" ref="view_contract_revenue_graph"/>
+        </record>
+
+        <!-- Doanh thu theo loại hợp đồng -->
+        <record id="view_contract_type_graph" model="ir.ui.view">
+            <field name="name">contract.type.graph</field>
+            <field name="model">contract</field>
+            <field name="arch" type="xml">
+                <graph string="Doanh thu theo Loại HĐ" type="pie">
+                    <field name="contract_type"/>
+                    <field name="contract_value" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_revenue_type" model="ir.actions.act_window">
+            <field name="name">Doanh thu theo Loại HĐ</field>
+            <field name="res_model">contract</field>
+            <field name="view_mode">graph,pivot,tree</field>
+            <field name="view_id" ref="view_contract_type_graph"/>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- BÁO CÁO KHÁCH HÀNG                           -->
+        <!-- ============================================ -->
+
+        <!-- Khách hàng theo loại -->
+        <record id="view_customer_type_graph" model="ir.ui.view">
+            <field name="name">customer.type.graph</field>
+            <field name="model">customer</field>
+            <field name="arch" type="xml">
+                <graph string="Khách hàng theo Loại" type="pie">
+                    <field name="customer_type"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_customer_type" model="ir.actions.act_window">
+            <field name="name">Khách hàng theo Loại</field>
+            <field name="res_model">customer</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="view_id" ref="view_customer_type_graph"/>
+        </record>
+
+        <!-- Khách hàng theo trạng thái -->
+        <record id="view_customer_status_graph" model="ir.ui.view">
+            <field name="name">customer.status.graph</field>
+            <field name="model">customer</field>
+            <field name="arch" type="xml">
+                <graph string="Khách hàng theo Trạng thái" type="bar">
+                    <field name="customer_status"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_customer_status" model="ir.actions.act_window">
+            <field name="name">Khách hàng theo Trạng thái</field>
+            <field name="res_model">customer</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="view_id" ref="view_customer_status_graph"/>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- BÁO CÁO ĐƠN HÀNG                             -->
+        <!-- ============================================ -->
+
+        <record id="view_sale_order_state_graph" model="ir.ui.view">
+            <field name="name">sale.order.state.graph</field>
+            <field name="model">sale_order</field>
+            <field name="arch" type="xml">
+                <graph string="Đơn hàng theo Trạng thái" type="pie">
+                    <field name="state"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_sale_order_state" model="ir.actions.act_window">
+            <field name="name">Đơn hàng theo Trạng thái</field>
+            <field name="res_model">sale_order</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="view_id" ref="view_sale_order_state_graph"/>
+        </record>
+
+        <!-- Đơn hàng theo thanh toán -->
+        <record id="view_sale_order_payment_graph" model="ir.ui.view">
+            <field name="name">sale.order.payment.graph</field>
+            <field name="model">sale_order</field>
+            <field name="arch" type="xml">
+                <graph string="Đơn hàng theo Thanh toán" type="bar">
+                    <field name="payment_state"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_sale_payment" model="ir.actions.act_window">
+            <field name="name">Đơn hàng theo Thanh toán</field>
+            <field name="res_model">sale_order</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="view_id" ref="view_sale_order_payment_graph"/>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- BÁO CÁO BÁO GIÁ                              -->
+        <!-- ============================================ -->
+
+        <record id="view_quotation_state_graph" model="ir.ui.view">
+            <field name="name">quotation.state.graph</field>
+            <field name="model">quotation</field>
+            <field name="arch" type="xml">
+                <graph string="Báo giá theo Trạng thái" type="pie">
+                    <field name="state"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_quotation_state" model="ir.actions.act_window">
+            <field name="name">Báo giá theo Trạng thái</field>
+            <field name="res_model">quotation</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="view_id" ref="view_quotation_state_graph"/>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- BÁO CÁO PHẢN HỒI                             -->
+        <!-- ============================================ -->
+
+        <record id="view_feedback_rating_graph" model="ir.ui.view">
+            <field name="name">feedback.rating.graph</field>
+            <field name="model">feedback</field>
+            <field name="arch" type="xml">
+                <graph string="Phản hồi theo Đánh giá" type="bar">
+                    <field name="rating"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_feedback_rating" model="ir.actions.act_window">
+            <field name="name">Phản hồi theo Đánh giá</field>
+            <field name="res_model">feedback</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="view_id" ref="view_feedback_rating_graph"/>
+        </record>
+
+        <!-- Phản hồi theo loại -->
+        <record id="view_feedback_type_graph" model="ir.ui.view">
+            <field name="name">feedback.type.graph</field>
+            <field name="model">feedback</field>
+            <field name="arch" type="xml">
+                <graph string="Phản hồi theo Loại" type="pie">
+                    <field name="feedback_type"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_feedback_type" model="ir.actions.act_window">
+            <field name="name">Phản hồi theo Loại</field>
+            <field name="res_model">feedback</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="view_id" ref="view_feedback_type_graph"/>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- BÁO CÁO NHIỆM VỤ                             -->
+        <!-- ============================================ -->
+
+        <record id="view_task_state_graph" model="ir.ui.view">
+            <field name="name">task.state.graph</field>
+            <field name="model">project_task</field>
+            <field name="arch" type="xml">
+                <graph string="Nhiệm vụ theo Trạng thái" type="pie">
+                    <field name="state"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_task_state" model="ir.actions.act_window">
+            <field name="name">Nhiệm vụ theo Trạng thái</field>
+            <field name="res_model">project_task</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="view_id" ref="view_task_state_graph"/>
+        </record>
+
+        <!-- Nhiệm vụ theo ưu tiên -->
+        <record id="view_task_priority_graph" model="ir.ui.view">
+            <field name="name">task.priority.graph</field>
+            <field name="model">project_task</field>
+            <field name="arch" type="xml">
+                <graph string="Nhiệm vụ theo Độ ưu tiên" type="bar">
+                    <field name="priority"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_task_priority" model="ir.actions.act_window">
+            <field name="name">Nhiệm vụ theo Độ ưu tiên</field>
+            <field name="res_model">project_task</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="view_id" ref="view_task_priority_graph"/>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- BÁO CÁO CHIẾN DỊCH MARKETING                 -->
+        <!-- ============================================ -->
+
+        <record id="view_campaign_state_graph" model="ir.ui.view">
+            <field name="name">campaign.state.graph</field>
+            <field name="model">marketing_campaign</field>
+            <field name="arch" type="xml">
+                <graph string="Chiến dịch theo Trạng thái" type="pie">
+                    <field name="state"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_campaign_state" model="ir.actions.act_window">
+            <field name="name">Chiến dịch theo Trạng thái</field>
+            <field name="res_model">marketing_campaign</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="view_id" ref="view_campaign_state_graph"/>
+        </record>
+
+        <!-- Ngân sách chiến dịch -->
+        <record id="view_campaign_budget_pivot" model="ir.ui.view">
+            <field name="name">campaign.budget.pivot</field>
+            <field name="model">marketing_campaign</field>
+            <field name="arch" type="xml">
+                <pivot string="Ngân sách Chiến dịch">
+                    <field name="channel" type="row"/>
+                    <field name="budget" type="measure"/>
+                    <field name="actual_cost" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="action_report_campaign_budget" model="ir.actions.act_window">
+            <field name="name">Ngân sách Chiến dịch</field>
+            <field name="res_model">marketing_campaign</field>
+            <field name="view_mode">pivot,graph,tree</field>
+            <field name="view_id" ref="view_campaign_budget_pivot"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sequence cho Văn bản -->
+    <record id="seq_van_ban" model="ir.sequence">
+        <field name="name">Mã Văn Bản</field>
+        <field name="code">van_ban.sequence</field>
+        <field name="prefix">VB</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+</odoo>

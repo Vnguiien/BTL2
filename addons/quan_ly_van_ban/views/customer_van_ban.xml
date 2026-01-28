@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- View extend để thêm Tab Hồ sơ Văn bản vào form Customer -->
+        <record id="view_customer_form_van_ban" model="ir.ui.view">
+            <field name="name">customer.form.van_ban</field>
+            <field name="model">customer</field>
+            <field name="inherit_id" ref="quan_ly_khach_hang.view_customer_form"/>
+            <field name="arch" type="xml">
+                <!-- Thêm stat button Văn bản -->
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="action_view_van_ban" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                        <field name="total_van_ban" widget="statinfo" string="Văn bản"/>
+                    </button>
+                </xpath>
+                
+                <!-- Thêm thống kê văn bản -->
+                <xpath expr="//field[@name='total_quotations']" position="after">
+                    <field name="total_van_ban" readonly="1"/>
+                </xpath>
+                
+                <!-- Thêm Tab Hồ sơ Văn bản đầu tiên trong notebook -->
+                <xpath expr="//notebook" position="inside">
+                    <page string="📄 Hồ sơ Văn bản (Số hóa)" name="van_ban">
+                        <group>
+                            <button name="action_create_van_ban" type="object" string="➕ Tạo văn bản mới" class="btn-primary mb-3"/>
+                        </group>
+                        <field name="van_ban_ids" nolabel="1">
+                            <tree>
+                                <field name="ma_van_ban"/>
+                                <field name="ten_van_ban"/>
+                                <field name="loai_van_ban"/>
+                                <field name="so_hieu"/>
+                                <field name="ngay_ban_hanh"/>
+                                <field name="ngay_het_han"/>
+                                <field name="trang_thai" widget="badge" 
+                                       decoration-success="trang_thai == 'approved'" 
+                                       decoration-warning="trang_thai == 'pending'" 
+                                       decoration-danger="trang_thai in ['expired', 'cancelled']"/>
+                                <field name="attachment_count" string="Files"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

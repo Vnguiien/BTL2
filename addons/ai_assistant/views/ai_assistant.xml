@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- AI Config Form View -->
+        <record id="view_ai_config_form" model="ir.ui.view">
+            <field name="name">ai.config.form</field>
+            <field name="model">ai.config</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="OpenRouter Configuration">
+                                <field name="api_key" password="True"/>
+                                <field name="ai_model"/>
+                                <field name="is_active"/>
+                            </group>
+                            <group string="Settings">
+                                <field name="max_tokens"/>
+                                <field name="temperature"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Giới hạn sử dụng">
+                                <field name="daily_limit"/>
+                                <field name="monthly_limit"/>
+                            </group>
+                            <group string="Thống kê">
+                                <field name="total_requests"/>
+                                <field name="last_request_date"/>
+                            </group>
+                        </group>
+                        <div class="alert alert-info" role="alert">
+                            <strong>Hướng dẫn sử dụng OpenRouter:</strong>
+                            <ol>
+                                <li>Đăng ký tài khoản tại <a href="https://openrouter.ai" target="_blank">openrouter.ai</a></li>
+                                <li>Vào <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a> để tạo API Key</li>
+                                <li>Copy API Key và paste vào ô trên</li>
+                                <li>Click "Test Kết Nối" để kiểm tra</li>
+                            </ol>
+                            <hr/>
+                            <strong>Các model miễn phí được khuyên dùng:</strong>
+                            <ul>
+                                <li><b>Xiaomi MiMo V2 Flash</b> - Nhanh, chất lượng tốt</li>
+                                <li><b>Google Gemini 2.0 Flash</b> - Đa năng</li>
+                                <li><b>Meta Llama 3.3 70B</b> - Mạnh mẽ</li>
+                                <li><b>DeepSeek Chat V3</b> - Tiếng Việt tốt</li>
+                            </ul>
+                        </div>
+                        <footer>
+                            <button name="action_test_connection" type="object" 
+                                    string="Test Kết Nối" class="btn-primary"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- AI Config Tree View -->
+        <record id="view_ai_config_tree" model="ir.ui.view">
+            <field name="name">ai.config.tree</field>
+            <field name="model">ai.config</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="ai_model"/>
+                    <field name="is_active"/>
+                    <field name="total_requests"/>
+                    <field name="last_request_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_ai_config" model="ir.actions.act_window">
+            <field name="name">AI Settings (OpenRouter)</field>
+            <field name="res_model">ai.config</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

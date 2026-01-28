@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Danh mục gốc -->
+        <record id="category_hop_dong" model="van_ban_category">
+            <field name="ma_danh_muc">DM01</field>
+            <field name="ten_danh_muc">Hợp đồng</field>
+            <field name="mo_ta">Các loại hợp đồng với khách hàng và đối tác</field>
+            <field name="sequence">1</field>
+            <field name="color">1</field>
+        </record>
+        
+        <record id="category_bao_gia" model="van_ban_category">
+            <field name="ma_danh_muc">DM02</field>
+            <field name="ten_danh_muc">Báo giá</field>
+            <field name="mo_ta">Các báo giá gửi khách hàng</field>
+            <field name="sequence">2</field>
+            <field name="color">2</field>
+        </record>
+        
+        <record id="category_phap_ly" model="van_ban_category">
+            <field name="ma_danh_muc">DM03</field>
+            <field name="ten_danh_muc">Tài liệu pháp lý</field>
+            <field name="mo_ta">Giấy phép, đăng ký kinh doanh, chứng nhận</field>
+            <field name="sequence">3</field>
+            <field name="color">3</field>
+        </record>
+        
+        <record id="category_van_ban_den" model="van_ban_category">
+            <field name="ma_danh_muc">DM04</field>
+            <field name="ten_danh_muc">Văn bản đến</field>
+            <field name="mo_ta">Văn bản nhận từ bên ngoài</field>
+            <field name="sequence">4</field>
+            <field name="color">4</field>
+        </record>
+        
+        <record id="category_van_ban_di" model="van_ban_category">
+            <field name="ma_danh_muc">DM05</field>
+            <field name="ten_danh_muc">Văn bản đi</field>
+            <field name="mo_ta">Văn bản gửi ra bên ngoài</field>
+            <field name="sequence">5</field>
+            <field name="color">5</field>
+        </record>
+        
+        <record id="category_noi_bo" model="van_ban_category">
+            <field name="ma_danh_muc">DM06</field>
+            <field name="ten_danh_muc">Văn bản nội bộ</field>
+            <field name="mo_ta">Quy định, quy trình, thông báo nội bộ</field>
+            <field name="sequence">6</field>
+            <field name="color">6</field>
+        </record>
+        
+        <!-- Danh mục con của Hợp đồng -->
+        <record id="category_hop_dong_lao_dong" model="van_ban_category">
+            <field name="ma_danh_muc">DM01.01</field>
+            <field name="ten_danh_muc">Hợp đồng lao động</field>
+            <field name="parent_id" ref="category_hop_dong"/>
+            <field name="sequence">1</field>
+        </record>
+        
+        <record id="category_hop_dong_khach_hang" model="van_ban_category">
+            <field name="ma_danh_muc">DM01.02</field>
+            <field name="ten_danh_muc">Hợp đồng khách hàng</field>
+            <field name="parent_id" ref="category_hop_dong"/>
+            <field name="sequence">2</field>
+        </record>
+        
+        <record id="category_hop_dong_doi_tac" model="van_ban_category">
+            <field name="ma_danh_muc">DM01.03</field>
+            <field name="ten_danh_muc">Hợp đồng đối tác</field>
+            <field name="parent_id" ref="category_hop_dong"/>
+            <field name="sequence">3</field>
+        </record>
+        
+        <!-- Danh mục con của Tài liệu pháp lý -->
+        <record id="category_giay_phep" model="van_ban_category">
+            <field name="ma_danh_muc">DM03.01</field>
+            <field name="ten_danh_muc">Giấy phép kinh doanh</field>
+            <field name="parent_id" ref="category_phap_ly"/>
+            <field name="sequence">1</field>
+        </record>
+        
+        <record id="category_chung_nhan" model="van_ban_category">
+            <field name="ma_danh_muc">DM03.02</field>
+            <field name="ten_danh_muc">Chứng nhận</field>
+            <field name="parent_id" ref="category_phap_ly"/>
+            <field name="sequence">2</field>
+        </record>
+    </data>
+</odoo>

@@ -1,28 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <data>
-        <menuitem
-            id="menu_root"
-            name="QLVB"
-            sequence="0"/>
-          
-        <menuitem name="Quản lý văn bản đến" 
-            id="menu_van_ban_den" 
-            parent="menu_root" 
-            sequence="1"
-            action="action_van_ban_den"
-        />
-        <menuitem name="Quản lý văn bản đi" 
-            id="menu_van_ban_di" 
-            parent="menu_root" 
-            sequence="2"
-            action="action_van_ban_di"
-        />
-        <menuitem name="Danh mục loại văn bản" 
-            id="menu_loai_van_ban" 
-            parent="menu_root" 
-            sequence="2"
-            action="action_loai_van_ban"
-        />
-    </data>
+<odoo noupdate="0">
+    <!-- Root Menu -->
+    <record id="menu_root" model="ir.ui.menu">
+        <field name="name">Quản lý Văn bản</field>
+        <field name="sequence">30</field>
+        <field name="web_icon">quan_ly_van_ban,static/description/icon.png</field>
+    </record>
+    
+    <!-- Sub-menu: Văn bản -->
+    <record id="menu_van_ban_main" model="ir.ui.menu">
+        <field name="name">Văn bản</field>
+        <field name="sequence">1</field>
+        <field name="parent_id" ref="menu_root"/>
+    </record>
+    
+    <record id="menu_van_ban" model="ir.ui.menu">
+        <field name="name">Tất cả văn bản</field>
+        <field name="sequence">1</field>
+        <field name="parent_id" ref="menu_van_ban_main"/>
+        <field name="action" ref="action_van_ban"/>
+    </record>
+    
+    <record id="menu_van_ban_customer" model="ir.ui.menu">
+        <field name="name">Văn bản theo khách hàng</field>
+        <field name="sequence">2</field>
+        <field name="parent_id" ref="menu_van_ban_main"/>
+        <field name="action" ref="action_van_ban_by_customer"/>
+    </record>
+
+    <record id="menu_van_ban_cho_duyet" model="ir.ui.menu">
+        <field name="name">Văn bản chờ duyệt</field>
+        <field name="sequence">3</field>
+        <field name="parent_id" ref="menu_van_ban_main"/>
+        <field name="action" ref="action_van_ban_cho_duyet"/>
+    </record>
+
+    <record id="menu_van_ban_sap_het_han" model="ir.ui.menu">
+        <field name="name">Văn bản sắp hết hạn</field>
+        <field name="sequence">4</field>
+        <field name="parent_id" ref="menu_van_ban_main"/>
+        <field name="action" ref="action_van_ban_sap_het_han"/>
+    </record>
+
+    <!-- Sub-menu: Báo cáo & Thống kê -->
+    <record id="menu_reports" model="ir.ui.menu">
+        <field name="name">Báo cáo &amp; Thống kê</field>
+        <field name="sequence">5</field>
+        <field name="parent_id" ref="menu_root"/>
+    </record>
+
+    <record id="menu_dashboard" model="ir.ui.menu">
+        <field name="name">Dashboard Văn bản</field>
+        <field name="sequence">0</field>
+        <field name="parent_id" ref="menu_reports"/>
+        <field name="action" ref="action_van_ban_dashboard"/>
+    </record>
+
+    <record id="menu_report_loai" model="ir.ui.menu">
+        <field name="name">Văn bản theo Loại</field>
+        <field name="sequence">1</field>
+        <field name="parent_id" ref="menu_reports"/>
+        <field name="action" ref="action_report_van_ban_loai"/>
+    </record>
+
+    <record id="menu_report_trang_thai" model="ir.ui.menu">
+        <field name="name">Văn bản theo Trạng thái</field>
+        <field name="sequence">2</field>
+        <field name="parent_id" ref="menu_reports"/>
+        <field name="action" ref="action_report_van_ban_trang_thai"/>
+    </record>
+
+    <record id="menu_report_category" model="ir.ui.menu">
+        <field name="name">Văn bản theo Danh mục</field>
+        <field name="sequence">3</field>
+        <field name="parent_id" ref="menu_reports"/>
+        <field name="action" ref="action_report_van_ban_category"/>
+    </record>
+
+    <record id="menu_report_do_mat" model="ir.ui.menu">
+        <field name="name">Văn bản theo Độ mật</field>
+        <field name="sequence">4</field>
+        <field name="parent_id" ref="menu_reports"/>
+        <field name="action" ref="action_report_van_ban_do_mat"/>
+    </record>
+
+    <record id="menu_report_customer" model="ir.ui.menu">
+        <field name="name">Văn bản theo Khách hàng</field>
+        <field name="sequence">5</field>
+        <field name="parent_id" ref="menu_reports"/>
+        <field name="action" ref="action_report_van_ban_customer"/>
+    </record>
+
+    <!-- Sub-menu: Cấu hình -->
+    <record id="menu_config" model="ir.ui.menu">
+        <field name="name">Cấu hình</field>
+        <field name="sequence">10</field>
+        <field name="parent_id" ref="menu_root"/>
+    </record>
+    
+    <record id="menu_van_ban_category" model="ir.ui.menu">
+        <field name="name">Danh mục văn bản</field>
+        <field name="sequence">1</field>
+        <field name="parent_id" ref="menu_config"/>
+        <field name="action" ref="action_van_ban_category"/>
+    </record>
+    
+    <record id="menu_van_ban_template" model="ir.ui.menu">
+        <field name="name">Mẫu văn bản</field>
+        <field name="sequence">2</field>
+        <field name="parent_id" ref="menu_config"/>
+        <field name="action" ref="action_van_ban_template"/>
+    </record>
 </odoo>

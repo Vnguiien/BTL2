@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_van_ban_category_form" model="ir.ui.view">
+        <field name="name">van_ban_category.form</field>
+        <field name="model">van_ban_category</field>
+        <field name="arch" type="xml">
+            <form string="Danh mục văn bản">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(quan_ly_van_ban.action_van_ban)d" type="action" 
+                                class="oe_stat_button" icon="fa-file-text-o"
+                                context="{'search_default_category_id': active_id}">
+                            <field name="van_ban_count" widget="statinfo" string="Văn bản"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="ma_danh_muc"/>
+                        <h1>
+                            <field name="ma_danh_muc" placeholder="Mã danh mục"/>
+                        </h1>
+                        <h2>
+                            <field name="ten_danh_muc" placeholder="Tên danh mục"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="parent_id" options="{'no_create': True}"/>
+                            <field name="complete_name" readonly="1"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="color" widget="color_picker"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group string="Mô tả">
+                        <field name="mo_ta" nolabel="1" placeholder="Mô tả về danh mục..."/>
+                    </group>
+                    <notebook>
+                        <page string="Danh mục con" name="children" 
+                              attrs="{'invisible': [('child_ids', '=', [])]}">
+                            <field name="child_ids">
+                                <tree>
+                                    <field name="ma_danh_muc"/>
+                                    <field name="ten_danh_muc"/>
+                                    <field name="van_ban_count"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_van_ban_category_tree" model="ir.ui.view">
+        <field name="name">van_ban_category.tree</field>
+        <field name="model">van_ban_category</field>
+        <field name="arch" type="xml">
+            <tree string="Danh mục văn bản">
+                <field name="sequence" widget="handle"/>
+                <field name="ma_danh_muc"/>
+                <field name="complete_name"/>
+                <field name="parent_id"/>
+                <field name="van_ban_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_van_ban_category_search" model="ir.ui.view">
+        <field name="name">van_ban_category.search</field>
+        <field name="model">van_ban_category</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm danh mục">
+                <field name="ma_danh_muc"/>
+                <field name="ten_danh_muc"/>
+                <separator/>
+                <filter string="Danh mục gốc" name="root" domain="[('parent_id', '=', False)]"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <separator/>
+                <group expand="0" string="Nhóm theo">
+                    <filter string="Danh mục cha" name="group_parent" context="{'group_by': 'parent_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_van_ban_category" model="ir.actions.act_window">
+        <field name="name">Danh mục văn bản</field>
+        <field name="res_model">van_ban_category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_van_ban_category_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo danh mục văn bản mới
+            </p>
+        </field>
+    </record>
+</odoo>

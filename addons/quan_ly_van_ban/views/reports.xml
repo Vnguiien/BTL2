@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ============================================ -->
+        <!-- DASHBOARD VĂN BẢN                            -->
+        <!-- ============================================ -->
+
+        <!-- Dashboard Action -->
+        <record id="action_van_ban_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard Văn bản</field>
+            <field name="res_model">van_ban</field>
+            <field name="view_mode">kanban,tree,form,graph,pivot</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Chào mừng đến Dashboard Văn bản
+                </p>
+                <p>
+                    Quản lý toàn bộ văn bản, hồ sơ, tài liệu của công ty
+                </p>
+            </field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- BÁO CÁO VĂN BẢN THEO LOẠI                    -->
+        <!-- ============================================ -->
+
+        <record id="view_van_ban_loai_graph" model="ir.ui.view">
+            <field name="name">van_ban.loai.graph</field>
+            <field name="model">van_ban</field>
+            <field name="arch" type="xml">
+                <graph string="Văn bản theo Loại" type="pie">
+                    <field name="loai_van_ban"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_van_ban_loai" model="ir.actions.act_window">
+            <field name="name">Văn bản theo Loại</field>
+            <field name="res_model">van_ban</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="view_id" ref="view_van_ban_loai_graph"/>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- BÁO CÁO VĂN BẢN THEO TRẠNG THÁI              -->
+        <!-- ============================================ -->
+
+        <record id="view_van_ban_trang_thai_graph" model="ir.ui.view">
+            <field name="name">van_ban.trang_thai.graph</field>
+            <field name="model">van_ban</field>
+            <field name="arch" type="xml">
+                <graph string="Văn bản theo Trạng thái" type="bar">
+                    <field name="trang_thai"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_van_ban_trang_thai" model="ir.actions.act_window">
+            <field name="name">Văn bản theo Trạng thái</field>
+            <field name="res_model">van_ban</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="view_id" ref="view_van_ban_trang_thai_graph"/>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- BÁO CÁO VĂN BẢN THEO DANH MỤC                -->
+        <!-- ============================================ -->
+
+        <record id="view_van_ban_category_pivot" model="ir.ui.view">
+            <field name="name">van_ban.category.pivot</field>
+            <field name="model">van_ban</field>
+            <field name="arch" type="xml">
+                <pivot string="Văn bản theo Danh mục">
+                    <field name="category_id" type="row"/>
+                    <field name="loai_van_ban" type="col"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_van_ban_category_graph" model="ir.ui.view">
+            <field name="name">van_ban.category.graph</field>
+            <field name="model">van_ban</field>
+            <field name="arch" type="xml">
+                <graph string="Văn bản theo Danh mục" type="bar">
+                    <field name="category_id"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_van_ban_category" model="ir.actions.act_window">
+            <field name="name">Văn bản theo Danh mục</field>
+            <field name="res_model">van_ban</field>
+            <field name="view_mode">graph,pivot,tree</field>
+            <field name="view_id" ref="view_van_ban_category_graph"/>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- BÁO CÁO VĂN BẢN THEO ĐỘ MẬT                  -->
+        <!-- ============================================ -->
+
+        <record id="view_van_ban_do_mat_graph" model="ir.ui.view">
+            <field name="name">van_ban.do_mat.graph</field>
+            <field name="model">van_ban</field>
+            <field name="arch" type="xml">
+                <graph string="Văn bản theo Độ mật" type="pie">
+                    <field name="do_mat"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_van_ban_do_mat" model="ir.actions.act_window">
+            <field name="name">Văn bản theo Độ mật</field>
+            <field name="res_model">van_ban</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="view_id" ref="view_van_ban_do_mat_graph"/>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- BÁO CÁO VĂN BẢN THEO KHÁCH HÀNG              -->
+        <!-- ============================================ -->
+
+        <record id="view_van_ban_customer_pivot" model="ir.ui.view">
+            <field name="name">van_ban.customer.pivot</field>
+            <field name="model">van_ban</field>
+            <field name="arch" type="xml">
+                <pivot string="Văn bản theo Khách hàng">
+                    <field name="customer_id" type="row"/>
+                    <field name="loai_van_ban" type="col"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="action_report_van_ban_customer" model="ir.actions.act_window">
+            <field name="name">Văn bản theo Khách hàng</field>
+            <field name="res_model">van_ban</field>
+            <field name="view_mode">pivot,tree</field>
+            <field name="view_id" ref="view_van_ban_customer_pivot"/>
+            <field name="domain">[('customer_id', '!=', False)]</field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- VĂN BẢN SẮP HẾT HẠN                          -->
+        <!-- ============================================ -->
+
+        <record id="action_van_ban_sap_het_han" model="ir.actions.act_window">
+            <field name="name">Văn bản sắp hết hạn</field>
+            <field name="res_model">van_ban</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[
+                ('ngay_het_han', '!=', False),
+                ('trang_thai', '=', 'approved'),
+                ('is_expired', '=', False)
+            ]</field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- VĂN BẢN CHỜ DUYỆT                            -->
+        <!-- ============================================ -->
+
+        <record id="action_van_ban_cho_duyet" model="ir.actions.act_window">
+            <field name="name">Văn bản chờ duyệt</field>
+            <field name="res_model">van_ban</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[('trang_thai', '=', 'pending')]</field>
+        </record>
+
+    </data>
+</odoo>

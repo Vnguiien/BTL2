@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="view_customer_form" model="ir.ui.view">
+            <field name="name">customer</field>
+            <field name="model">customer</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <!-- Stat button: Hợp đồng -->
+                            <button class="oe_stat_button" icon="fa-handshake-o" type="object" name="action_view_contracts">
+                                <field name="total_contracts" widget="statinfo" string="Hợp đồng"/>
+                            </button>
+                            <!-- Stat button: Báo giá -->
+                            <button name="action_view_quotations" type="object" class="oe_stat_button" icon="fa-calculator">
+                                <field name="total_quotations" widget="statinfo" string="Báo giá"/>
+                            </button>
+                            <!-- Stat button: Đơn hàng -->
+                            <button class="oe_stat_button" icon="fa-shopping-cart" type="object" name="action_view_sale_orders">
+                                <field name="total_sale_orders" widget="statinfo" string="Đơn hàng"/>
+                            </button>
+                            <!-- Stat button: Tương tác -->
+                            <button class="oe_stat_button" icon="fa-comments" type="object" name="action_view_interactions">
+                                <field name="total_interactions" widget="statinfo" string="Tương tác"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="customer_name" placeholder="Tên khách hàng"/>
+                            </h1>
+                            <h4>
+                                <field name="customer_id" readonly="1"/>
+                            </h4>
+                        </div>
+                        <group col="4" string="Thông tin chung">
+                            <field name="email" string="Email *" placeholder="Ex: example@domain.com"/>
+                            <field name="phone" string="Số điện thoại *" placeholder="Ex: +84.., 09.."/>
+                            <field name="gender"/>
+                            <field name="date_of_birth" widget="date"/>
+                            <field name="age" readonly="1"/>
+                            <field name="address"/>
+                            <field name="income_level"/>
+                            <field name="customer_type"/>
+                            <field name="company_name" string="Tên công ty *" attrs="{'invisible': [('customer_type', '!=', 'company')]}"/>
+                            <field name="tax_code" string="Mã số thuế *" attrs="{'invisible': [('customer_type', '!=', 'company')]}"/>
+                            <field name="customer_status"/>
+                            <field name="active"/>
+                            <field name="near_birthday" readonly="1" string="Gần tới sinh nhật"/>
+                        </group>
+                        <group col="2" string="Ảnh">
+                            <field name="image" widget="image"/>
+                        </group>
+                        <group>
+                            <group colspan="4">
+                                <div class="oe_button_box" name="action_box" style="text-align: left;">
+                                    <button name="action_send_welcome_email"
+                                            type="object"
+                                            string="Gửi email chào mừng"
+                                            class="btn-secondary"
+                                            icon="fa-envelope"
+                                            attrs="{'invisible': [('email', '=', False)]}"
+                                            confirm="Bạn có chắc chắn muốn gửi email chào mừng tới khách hàng này?"/>
+                                    <button name="action_send_birthday_email"
+                                            type="object"
+                                            string="Gửi email sinh nhật"
+                                            class="btn-secondary"
+                                            icon="fa-birthday-cake"
+                                            attrs="{'invisible': [('email', '=', False)]}"
+                                            confirm="Bạn có chắc chắn muốn gửi email chúc mừng sinh nhật tới khách hàng này?"/>
+                                </div>
+                            </group>
+                        </group>
+                        <group col="4" string="Thống kê">
+                            <field name="total_contracts" readonly="1"/>
+                            <field name="total_quotations" readonly="1"/>
+                            <field name="total_sale_orders" readonly="1"/>
+                            <field name="total_interactions" readonly="1"/>
+                            <field name="total_amount" readonly="1"/>
+                            <field name="recent_interactions" readonly="1"/>
+                        </group>
+                        <notebook>
+                            <page string="📋 Báo giá" name="quotations">
+                                <field name="quotation_ids" nolabel="1"/>
+                            </page>
+                            <page string="📝 Hợp đồng" name="contracts">
+                                <field name="contract_ids" nolabel="1"/>
+                            </page>
+                            <page string="💼 Cơ hội" name="leads">
+                                <field name="lead_ids" nolabel="1"/>
+                            </page>
+                            <page string="🛒 Đơn hàng" name="orders">
+                                <field name="sale_order_ids" nolabel="1"/>
+                            </page>
+                            <page string="💬 Tương tác" name="interactions">
+                                <field name="interact_ids" nolabel="1"/>
+                            </page>
+                            <page string="📌 Nhiệm vụ" name="tasks">
+                                <field name="task_ids" nolabel="1"/>
+                            </page>
+                            <page string="📝 Ghi chú" name="notes">
+                                <field name="note_ids" nolabel="1"/>
+                            </page>
+                            <page string="⭐ Phản hồi" name="feedback">
+                                <field name="feedback_ids" nolabel="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="view_customer_tree" model="ir.ui.view">
+            <field name="name">customer</field>
+            <field name="model">customer</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="customer_id"/>
+                    <field name="customer_name"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="address"/>
+                    <field name="customer_type"/>
+                    <field name="income_level"/>
+                    <field name="company_name"/>
+                    <field name="customer_status"/>
+                    <field name="total_sale_orders"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Graph View -->
+        <record id="view_customer_graph" model="ir.ui.view">
+            <field name="name">customer.graph</field>
+            <field name="model">customer</field>
+            <field name="arch" type="xml">
+                <graph string="Thống kê khách hàng" type="bar">
+                    <field name="customer_type" type="row"/>
+                    <field name="income_level" type="row"/>
+                    <field name="total_sale_orders" type="measure"/>
+                    <field name="total_amount" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="view_customer_status_graph" model="ir.ui.view">
+            <field name="name">customer.status.graph</field>
+            <field name="model">customer</field>
+            <field name="arch" type="xml">
+                <graph string="Phân bố trạng thái khách hàng" type="pie">
+                    <field name="customer_status" type="row"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="view_customer_income_level_graph" model="ir.ui.view">
+            <field name="name">customer.income.level.graph</field>
+            <field name="model">customer</field>
+            <field name="arch" type="xml">
+                <graph string="Phân bố mức thu nhập khách hàng" type="bar">
+                    <field name="income_level" type="row"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="view_customer_contracts_interactions_graph" model="ir.ui.view">
+            <field name="name">customer.contracts.interactions.graph</field>
+            <field name="model">customer</field>
+            <field name="arch" type="xml">
+                <graph string="Số hợp đồng và tương tác" type="bar">
+                    <field name="customer_name" type="row"/>
+                    <field name="total_contracts" type="measure"/>
+                    <field name="total_interactions" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="customer_search" model="ir.ui.view">
+            <field name="name">customer</field>
+            <field name="model">customer</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="customer_id"/>
+                    <field name="customer_name"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="address"/>
+                    <field name="customer_type"/>
+                    <field name="income_level"/>
+                    <filter string="Khách hàng cá nhân" name="individual_customers" domain="[('customer_type', '=', 'individual')]"/>
+                    <filter string="Khách hàng công ty" name="company_customers" domain="[('customer_type', '=', 'company')]"/>
+                    <filter string="Khách hàng mới" name="new_customers" domain="[('customer_status', '=', 'new')]"/>
+                    <filter string="Khách hàng đang hoạt động" name="active_customers" domain="[('customer_status', '=', 'active')]"/>
+                    <filter string="Khách hàng không hoạt động" name="inactive_customers" domain="[('customer_status', '=', 'inactive')]"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Loại khách hàng" name="group_by_customer_type" context="{'group_by': 'customer_type'}"/>
+                        <filter string="Trạng thái" name="group_by_status" context="{'group_by': 'customer_status'}"/>
+                    </group>
+                    <searchpanel>
+                        <field name="customer_type" string="Loại khách hàng" select="multi"/>
+                        <field name="income_level" string="Mức thu nhập" select="multi"/>
+                        <field name="customer_status" string="Trạng thái" select="multi"/>
+                        <field name="gender" select="multi" enable_counters="1"/>
+                        <field name="age_group" select="multi" enable_counters="1"/>
+                        <field name="sale_order_group" select="multi" enable_counters="1"/>
+                    </searchpanel>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_customer" model="ir.actions.act_window">
+            <field name="name">Khách hàng</field>
+            <field name="res_model">customer</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="search_view_id" ref="customer_search"/>
+        </record>
+    </data>
+</odoo>

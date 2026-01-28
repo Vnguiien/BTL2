@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_van_ban_form" model="ir.ui.view">
+        <field name="name">van_ban.form</field>
+        <field name="model">van_ban</field>
+        <field name="arch" type="xml">
+            <form string="Văn bản">
+                <header>
+                    <button name="action_submit" string="Gửi duyệt" type="object" 
+                            class="btn-primary" attrs="{'invisible': [('trang_thai', '!=', 'draft')]}"/>
+                    <button name="action_approve" string="Duyệt" type="object" 
+                            class="btn-success" attrs="{'invisible': [('trang_thai', '!=', 'pending')]}"/>
+                    <button name="action_cancel" string="Hủy" type="object" 
+                            attrs="{'invisible': [('trang_thai', 'not in', ['draft', 'pending'])]}"/>
+                    <button name="action_draft" string="Về nháp" type="object" 
+                            attrs="{'invisible': [('trang_thai', '!=', 'cancelled')]}"/>
+                    <field name="trang_thai" widget="statusbar" 
+                           statusbar_visible="draft,pending,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_attachments" type="object" 
+                                class="oe_stat_button" icon="fa-paperclip">
+                            <field name="attachment_count" widget="statinfo" string="File đính kèm"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Hết hiệu lực" bg_color="bg-danger" 
+                            attrs="{'invisible': [('is_expired', '=', False)]}"/>
+                    <widget name="web_ribbon" title="Đã duyệt" bg_color="bg-success" 
+                            attrs="{'invisible': [('trang_thai', '!=', 'approved')]}"/>
+                    <div class="oe_title">
+                        <label for="ma_van_ban"/>
+                        <h1>
+                            <field name="ma_van_ban" placeholder="Mã văn bản"/>
+                        </h1>
+                        <h2>
+                            <field name="ten_van_ban" placeholder="Tên/Tiêu đề văn bản"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group string="Thông tin chung">
+                            <field name="loai_van_ban"/>
+                            <field name="category_id"/>
+                            <field name="so_hieu"/>
+                            <field name="nhan_vien_id" options="{'no_create': True}"/>
+                        </group>
+                        <group string="Thời gian">
+                            <field name="ngay_ban_hanh"/>
+                            <field name="ngay_hieu_luc"/>
+                            <field name="ngay_het_han"/>
+                            <field name="days_until_expiry" attrs="{'invisible': [('ngay_het_han', '=', False)]}"/>
+                            <field name="is_expired" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Liên kết">
+                            <field name="customer_id" options="{'no_create': True}"/>
+                            <field name="contract_id" domain="[('customer_id', '=', customer_id)]" 
+                                   options="{'no_create': True}" 
+                                   attrs="{'invisible': [('loai_van_ban', '!=', 'hop_dong')]}"/>
+                            <field name="quotation_id" domain="[('customer_id', '=', customer_id)]" 
+                                   options="{'no_create': True}" 
+                                   attrs="{'invisible': [('loai_van_ban', '!=', 'bao_gia')]}"/>
+                        </group>
+                        <group string="Phân loại">
+                            <field name="do_mat"/>
+                            <field name="do_khan"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Trích yếu" name="summary">
+                            <field name="trich_yeu" placeholder="Trích yếu nội dung văn bản..."/>
+                        </page>
+                        <page string="Nội dung chi tiết" name="content">
+                            <field name="noi_dung" placeholder="Nội dung chi tiết của văn bản..."/>
+                        </page>
+                        <page string="File đính kèm" name="attachments">
+                            <field name="attachment_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="file" filename="file_name"/>
+                                    <field name="file_name"/>
+                                    <field name="loai_file"/>
+                                    <field name="file_size"/>
+                                    <field name="mo_ta"/>
+                                    <field name="ngay_upload"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Thông tin duyệt" name="approval" 
+                              attrs="{'invisible': [('trang_thai', 'not in', ['approved', 'expired'])]}">
+                            <group>
+                                <field name="nguoi_duyet_id" readonly="1"/>
+                                <field name="ngay_duyet" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Lịch sử thay đổi" name="history">
+                            <field name="history_ids" readonly="1">
+                                <tree>
+                                    <field name="ngay_thay_doi"/>
+                                    <field name="nguoi_thay_doi_id"/>
+                                    <field name="loai_thay_doi"/>
+                                    <field name="ghi_chu"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Ghi chú" name="notes">
+                            <field name="ghi_chu" placeholder="Ghi chú thêm..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_van_ban_tree" model="ir.ui.view">
+        <field name="name">van_ban.tree</field>
+        <field name="model">van_ban</field>
+        <field name="arch" type="xml">
+            <tree string="Danh sách văn bản" decoration-danger="is_expired == True" 
+                  decoration-muted="trang_thai in ['cancelled', 'expired']">
+                <field name="ma_van_ban"/>
+                <field name="ten_van_ban"/>
+                <field name="loai_van_ban"/>
+                <field name="category_id"/>
+                <field name="customer_id"/>
+                <field name="nhan_vien_id"/>
+                <field name="ngay_ban_hanh"/>
+                <field name="ngay_het_han"/>
+                <field name="do_mat"/>
+                <field name="do_khan"/>
+                <field name="attachment_count"/>
+                <field name="trang_thai" widget="badge" 
+                       decoration-success="trang_thai == 'approved'"
+                       decoration-warning="trang_thai == 'pending'"
+                       decoration-danger="trang_thai in ['cancelled', 'expired']"/>
+                <field name="is_expired" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_van_ban_kanban" model="ir.ui.view">
+        <field name="name">van_ban.kanban</field>
+        <field name="model">van_ban</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" default_group_by="loai_van_ban">
+                <field name="ma_van_ban"/>
+                <field name="ten_van_ban"/>
+                <field name="loai_van_ban"/>
+                <field name="trang_thai"/>
+                <field name="customer_id"/>
+                <field name="attachment_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <strong class="o_kanban_record_title">
+                                    <field name="ma_van_ban"/> - <field name="ten_van_ban"/>
+                                </strong>
+                                <div class="o_kanban_record_subtitle">
+                                    <field name="customer_id"/>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <field name="trang_thai" widget="badge"/>
+                                    <span class="float-right">
+                                        <i class="fa fa-paperclip" title="File đính kèm"/> <field name="attachment_count"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_van_ban_search" model="ir.ui.view">
+        <field name="name">van_ban.search</field>
+        <field name="model">van_ban</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm văn bản">
+                <field name="ma_van_ban"/>
+                <field name="ten_van_ban"/>
+                <field name="so_hieu"/>
+                <field name="customer_id"/>
+                <field name="nhan_vien_id"/>
+                <separator/>
+                <filter string="Nháp" name="draft" domain="[('trang_thai', '=', 'draft')]"/>
+                <filter string="Chờ duyệt" name="pending" domain="[('trang_thai', '=', 'pending')]"/>
+                <filter string="Đã duyệt" name="approved" domain="[('trang_thai', '=', 'approved')]"/>
+                <filter string="Hết hiệu lực" name="expired" domain="[('is_expired', '=', True)]"/>
+                <separator/>
+                <filter string="Hợp đồng" name="contract" domain="[('loai_van_ban', '=', 'hop_dong')]"/>
+                <filter string="Báo giá" name="quotation" domain="[('loai_van_ban', '=', 'bao_gia')]"/>
+                <filter string="Tài liệu pháp lý" name="legal" domain="[('loai_van_ban', '=', 'phap_ly')]"/>
+                <filter string="Văn bản đến" name="incoming" domain="[('loai_van_ban', '=', 'van_ban_den')]"/>
+                <filter string="Văn bản đi" name="outgoing" domain="[('loai_van_ban', '=', 'van_ban_di')]"/>
+                <separator/>
+                <group expand="0" string="Nhóm theo">
+                    <filter string="Loại văn bản" name="group_type" context="{'group_by': 'loai_van_ban'}"/>
+                    <filter string="Danh mục" name="group_category" context="{'group_by': 'category_id'}"/>
+                    <filter string="Khách hàng" name="group_customer" context="{'group_by': 'customer_id'}"/>
+                    <filter string="Trạng thái" name="group_state" context="{'group_by': 'trang_thai'}"/>
+                    <filter string="Độ mật" name="group_confidential" context="{'group_by': 'do_mat'}"/>
+                    <filter string="Tháng ban hành" name="group_month" context="{'group_by': 'ngay_ban_hanh:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_van_ban" model="ir.actions.act_window">
+        <field name="name">Văn bản</field>
+        <field name="res_model">van_ban</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="view_van_ban_search"/>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tạo văn bản mới
+            </p>
+            <p>
+                Quản lý tập trung toàn bộ văn bản, hồ sơ, hợp đồng, báo giá và tài liệu pháp lý của doanh nghiệp.
+            </p>
+        </field>
+    </record>
+
+    <!-- Action for documents by customer -->
+    <record id="action_van_ban_by_customer" model="ir.actions.act_window">
+        <field name="name">Văn bản theo khách hàng</field>
+        <field name="res_model">van_ban</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_group_customer': 1}</field>
+    </record>
+</odoo>

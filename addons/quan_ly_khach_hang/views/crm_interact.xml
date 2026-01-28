@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="view_crm_interact_form" model="ir.ui.view">
+            <field name="name">crm_interact.form</field>
+            <field name="model">crm_interact</field>
+            <field name="arch" type="xml">
+                <form string="Tương tác khách hàng">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="crm_interact_id"/>
+                            <h1>
+                                <field name="crm_interact_id" placeholder="Mã tương tác"/>
+                            </h1>
+                            <field name="crm_interact_name" placeholder="Tên tương tác"/>
+                        </div>
+                        <group>
+                            <group string="Thông tin chung">
+                                <field name="customer_id" options="{'no_create': True}"/>
+                                <field name="nhan_vien_id" options="{'no_create': True}"/>
+                                <field name="interaction_type"/>
+                                <field name="date"/>
+                                <field name="duration"/>
+                            </group>
+                            <group string="Kết quả">
+                                <field name="result"/>
+                                <field name="next_action_date"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Ghi chú" name="notes">
+                                <field name="note" placeholder="Ghi chú về tương tác..."/>
+                            </page>
+                            <page string="Hành động tiếp theo" name="next">
+                                <field name="next_action" placeholder="Mô tả hành động tiếp theo..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="view_crm_interact_tree" model="ir.ui.view">
+            <field name="name">crm_interact.tree</field>
+            <field name="model">crm_interact</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách tương tác" decoration-success="result == 'positive'" 
+                      decoration-danger="result == 'negative'">
+                    <field name="crm_interact_id"/>
+                    <field name="crm_interact_name"/>
+                    <field name="customer_id"/>
+                    <field name="nhan_vien_id"/>
+                    <field name="interaction_type"/>
+                    <field name="date"/>
+                    <field name="duration"/>
+                    <field name="result"/>
+                    <field name="next_action_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record model="ir.ui.view" id="crm_interact_search">
+            <field name="name">crm_interact.search</field>
+            <field name="model">crm_interact</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm tương tác">
+                    <field name="crm_interact_id"/>
+                    <field name="crm_interact_name"/>
+                    <field name="customer_id"/>
+                    <field name="nhan_vien_id"/>
+                    <field name="interaction_type"/>
+                    <separator/>
+                    <filter string="Tương tác trong tháng" name="this_month" 
+                            domain="[('date', '&gt;=', context_today().strftime('%Y-%m-01'))]"/>
+                    <filter string="Có hành động tiếp theo" name="has_next_action" 
+                            domain="[('next_action_date', '!=', False)]"/>
+                    <separator/>
+                    <filter string="Cuộc gọi" name="call" domain="[('interaction_type', '=', 'call')]"/>
+                    <filter string="Email" name="email" domain="[('interaction_type', '=', 'email')]"/>
+                    <filter string="Cuộc họp" name="meeting" domain="[('interaction_type', '=', 'meeting')]"/>
+                    <separator/>
+                    <group expand="0" string="Nhóm theo">
+                        <filter string="Khách hàng" name="group_customer" context="{'group_by': 'customer_id'}"/>
+                        <filter string="Nhân viên" name="group_employee" context="{'group_by': 'nhan_vien_id'}"/>
+                        <filter string="Loại tương tác" name="group_type" context="{'group_by': 'interaction_type'}"/>
+                        <filter string="Kết quả" name="group_result" context="{'group_by': 'result'}"/>
+                        <filter string="Tháng" name="group_month" context="{'group_by': 'date:month'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_crm_interact" model="ir.actions.act_window">
+            <field name="name">Tương tác khách hàng</field>
+            <field name="res_model">crm_interact</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="crm_interact_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo tương tác mới
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="view_sale_order_form" model="ir.ui.view">
+            <field name="name">sale_order.form</field>
+            <field name="model">sale_order</field>
+            <field name="arch" type="xml">
+                <form string="Đơn hàng">
+                    <header>
+                        <button name="action_confirm" string="Xác nhận" type="object" 
+                                class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_process" string="Xử lý" type="object" 
+                                class="btn-primary" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+                        <button name="action_ship" string="Đã giao" type="object" 
+                                class="btn-primary" attrs="{'invisible': [('state', '!=', 'processing')]}"/>
+                        <button name="action_complete" string="Hoàn thành" type="object" 
+                                class="btn-success" attrs="{'invisible': [('state', '!=', 'shipped')]}"/>
+                        <button name="action_cancel" string="Hủy" type="object" 
+                                attrs="{'invisible': [('state', 'not in', ['draft', 'confirmed'])]}"/>
+                        <field name="state" widget="statusbar" 
+                               statusbar_visible="draft,confirmed,processing,shipped,completed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="sale_order_id"/>
+                            <h1>
+                                <field name="sale_order_id" placeholder="Mã đơn hàng"/>
+                            </h1>
+                            <field name="sale_order_name" placeholder="Tên đơn hàng"/>
+                        </div>
+                        <group>
+                            <group string="Thông tin đơn hàng">
+                                <field name="customer_id" options="{'no_create': True}"/>
+                                <field name="nhan_vien_id" options="{'no_create': True}"/>
+                                <field name="date_order"/>
+                                <field name="quotation_id" options="{'no_create': True}"/>
+                                <field name="contract_id" options="{'no_create': True}"/>
+                            </group>
+                            <group string="Thanh toán">
+                                <field name="payment_method"/>
+                                <field name="payment_state" widget="badge"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Chi tiết đơn hàng" name="lines">
+                                <field name="order_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="product_name"/>
+                                        <field name="description"/>
+                                        <field name="quantity"/>
+                                        <field name="uom"/>
+                                        <field name="unit_price"/>
+                                        <field name="discount"/>
+                                        <field name="subtotal"/>
+                                        <field name="tax_rate"/>
+                                        <field name="tax_amount"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="amount_untaxed" widget="monetary"/>
+                                    <field name="amount_tax" widget="monetary"/>
+                                    <field name="amount_total" widget="monetary" class="oe_subtotal_footer_separator oe_highlight"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </group>
+                            </page>
+                            <page string="Ghi chú" name="notes">
+                                <field name="note" placeholder="Ghi chú cho đơn hàng..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="view_sale_order_tree" model="ir.ui.view">
+            <field name="name">sale_order.tree</field>
+            <field name="model">sale_order</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách đơn hàng" decoration-muted="state == 'cancelled'">
+                    <field name="sale_order_id"/>
+                    <field name="sale_order_name"/>
+                    <field name="customer_id"/>
+                    <field name="nhan_vien_id"/>
+                    <field name="date_order"/>
+                    <field name="amount_total" widget="monetary"/>
+                    <field name="payment_state" widget="badge" 
+                           decoration-success="payment_state == 'paid'"
+                           decoration-warning="payment_state == 'partial'"
+                           decoration-danger="payment_state == 'not_paid'"/>
+                    <field name="state" widget="badge" 
+                           decoration-success="state == 'completed'"
+                           decoration-info="state in ['confirmed', 'processing', 'shipped']"/>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record model="ir.ui.view" id="sale_order_search">
+            <field name="name">sale_order.search</field>
+            <field name="model">sale_order</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm đơn hàng">
+                    <field name="sale_order_id"/>
+                    <field name="sale_order_name"/>
+                    <field name="customer_id"/>
+                    <field name="nhan_vien_id"/>
+                    <separator/>
+                    <filter string="Đã hoàn thành" name="completed" domain="[('state', '=', 'completed')]"/>
+                    <filter string="Đang xử lý" name="processing" domain="[('state', 'in', ['confirmed', 'processing', 'shipped'])]"/>
+                    <filter string="Chưa thanh toán" name="not_paid" domain="[('payment_state', '=', 'not_paid')]"/>
+                    <separator/>
+                    <group expand="0" string="Nhóm theo">
+                        <filter string="Khách hàng" name="group_customer" context="{'group_by': 'customer_id'}"/>
+                        <filter string="Nhân viên" name="group_employee" context="{'group_by': 'nhan_vien_id'}"/>
+                        <filter string="Trạng thái" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Thanh toán" name="group_payment" context="{'group_by': 'payment_state'}"/>
+                        <filter string="Tháng" name="group_month" context="{'group_by': 'date_order:month'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_sale_order" model="ir.actions.act_window">
+            <field name="name">Đơn hàng</field>
+            <field name="res_model">sale_order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="sale_order_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo đơn hàng mới
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

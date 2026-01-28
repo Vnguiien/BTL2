@@ -1,0 +1,298 @@
+/* ============================================
+   CUSTOM CSS CHO MODULE NHÂN SỰ
+   Premium UI Design
+   ============================================ */
+
+/* ========== BIẾN MÀU SẮC ========== */
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    --danger-gradient: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+    --warning-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    
+    --primary-color: #667eea;
+    --secondary-color: #11998e;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    --warning-color: #f59e0b;
+    --info-color: #3b82f6;
+    
+    --bg-dark: #1e293b;
+    --bg-light: #f8fafc;
+    --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    --card-shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+/* ========== KANBAN CARDS ========== */
+.o_kanban_view .o_kanban_record {
+    border-radius: 16px !important;
+    border: none !important;
+    box-shadow: var(--card-shadow) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background: white !important;
+    overflow: hidden !important;
+}
+
+.o_kanban_view .o_kanban_record:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: var(--card-shadow-hover) !important;
+}
+
+.o_kanban_view .o_kanban_record::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--primary-gradient);
+}
+
+/* ========== FORM VIEW ========== */
+.o_form_view .o_form_sheet {
+    border-radius: 20px !important;
+    box-shadow: var(--card-shadow) !important;
+    border: none !important;
+    padding: 32px !important;
+}
+
+.o_form_view .o_form_sheet_bg {
+    background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%) !important;
+}
+
+/* ========== STAT BUTTONS ========== */
+.o_form_view .oe_stat_button {
+    border-radius: 12px !important;
+    margin: 4px !important;
+    padding: 12px 16px !important;
+    background: white !important;
+    border: 2px solid #e2e8f0 !important;
+    transition: all 0.3s ease !important;
+}
+
+.o_form_view .oe_stat_button:hover {
+    background: var(--primary-gradient) !important;
+    border-color: transparent !important;
+    transform: scale(1.05);
+}
+
+.o_form_view .oe_stat_button:hover .o_stat_value,
+.o_form_view .oe_stat_button:hover .o_stat_text {
+    color: white !important;
+}
+
+.o_form_view .oe_stat_button .o_stat_value {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: var(--primary-color) !important;
+}
+
+/* ========== BUTTONS ========== */
+.o_form_view .o_form_statusbar .o_statusbar_buttons .btn-primary,
+.o_list_button .btn-primary {
+    background: var(--primary-gradient) !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 10px 24px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4) !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5) !important;
+}
+
+.btn-secondary {
+    background: white !important;
+    border: 2px solid #e2e8f0 !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-secondary:hover {
+    background: #f8fafc !important;
+    border-color: var(--primary-color) !important;
+    color: var(--primary-color) !important;
+}
+
+/* ========== STATUS BAR ========== */
+.o_form_statusbar {
+    background: white !important;
+    border-radius: 16px !important;
+    padding: 16px !important;
+    margin-bottom: 24px !important;
+    box-shadow: var(--card-shadow) !important;
+}
+
+.o_form_statusbar .o_statusbar_status .o_arrow_button {
+    border-radius: 8px !important;
+    border: 2px solid #e2e8f0 !important;
+    margin: 0 4px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+}
+
+.o_form_statusbar .o_statusbar_status .o_arrow_button.btn-primary {
+    background: var(--success-color) !important;
+    border-color: var(--success-color) !important;
+}
+
+/* ========== NOTEBOOK TABS ========== */
+.o_notebook .nav-tabs {
+    border-bottom: 2px solid #e2e8f0 !important;
+}
+
+.o_notebook .nav-tabs .nav-link {
+    border: none !important;
+    border-radius: 12px 12px 0 0 !important;
+    padding: 12px 24px !important;
+    font-weight: 600 !important;
+    color: #64748b !important;
+    transition: all 0.3s ease !important;
+}
+
+.o_notebook .nav-tabs .nav-link.active {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+}
+
+.o_notebook .nav-tabs .nav-link:hover:not(.active) {
+    background: #f1f5f9 !important;
+    color: var(--primary-color) !important;
+}
+
+/* ========== LIST VIEW ========== */
+.o_list_view .o_list_table thead th {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    padding: 16px 12px !important;
+    border: none !important;
+}
+
+.o_list_view .o_list_table tbody tr:nth-child(even) {
+    background: #f8fafc !important;
+}
+
+.o_list_view .o_list_table tbody tr:hover {
+    background: linear-gradient(90deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%) !important;
+}
+
+/* ========== BADGES ========== */
+.badge {
+    border-radius: 20px !important;
+    padding: 6px 16px !important;
+    font-weight: 600 !important;
+}
+
+.badge-success, .bg-success {
+    background: var(--secondary-gradient) !important;
+}
+
+.badge-primary, .bg-primary {
+    background: var(--primary-gradient) !important;
+}
+
+.badge-danger, .bg-danger {
+    background: var(--danger-gradient) !important;
+}
+
+.badge-warning, .bg-warning {
+    background: var(--warning-gradient) !important;
+    color: white !important;
+}
+
+.badge-info, .bg-info {
+    background: var(--info-gradient) !important;
+}
+
+/* ========== SEARCH VIEW ========== */
+.o_searchview {
+    border-radius: 50px !important;
+    border: 2px solid #e2e8f0 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+    overflow: hidden !important;
+}
+
+.o_searchview:focus-within {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.2) !important;
+}
+
+/* ========== GRAPH VIEW ========== */
+.o_graph_view {
+    background: white !important;
+    border-radius: 20px !important;
+    box-shadow: var(--card-shadow) !important;
+    padding: 24px !important;
+}
+
+/* ========== PIVOT VIEW ========== */
+.o_pivot {
+    background: white !important;
+    border-radius: 20px !important;
+    box-shadow: var(--card-shadow) !important;
+    padding: 24px !important;
+}
+
+.o_pivot table thead th {
+    background: var(--bg-dark) !important;
+    color: white !important;
+    padding: 12px 16px !important;
+}
+
+/* ========== CHATTER ========== */
+.o_chatter {
+    background: #f8fafc !important;
+    border-radius: 20px !important;
+    padding: 20px !important;
+    margin-top: 24px !important;
+}
+
+.o_chatter .o_mail_thread {
+    background: white !important;
+    border-radius: 16px !important;
+    padding: 16px !important;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.o_kanban_record,
+.o_form_sheet,
+.o_list_view {
+    animation: fadeInUp 0.4s ease-out;
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-gradient);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #764ba2;
+}

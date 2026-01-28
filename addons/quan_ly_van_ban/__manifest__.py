@@ -1,37 +1,57 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "quan_ly_van_ban",
+    'name': "Quản lý Văn bản",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Module số hóa và quản lý văn bản, hồ sơ, tài liệu""",
 
     'description': """
-        Long description of module's purpose
+        Module Quản lý Văn bản cung cấp các tính năng:
+        
+        * Số hóa toàn bộ hồ sơ, hợp đồng, báo giá, tài liệu pháp lý
+        * Gắn văn bản vào hồ sơ khách hàng để tra cứu tập trung
+        * Quản lý văn bản đến/đi trong công ty
+        * Phân loại văn bản theo danh mục
+        * Quản lý mẫu văn bản
+        * Theo dõi lịch sử thay đổi văn bản
+        * Tích hợp với module Nhân sự và Quản lý Khách hàng
     """,
 
-    'author': "FIT-DNU",
-    'website': "https://ttdn1501.aiotlabdnu.xyz/web",
+    'author': "Doanh nghiệp",
+    'website': "http://www.yourcompany.com",
+    'license': 'LGPL-3',
 
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
-    'category': 'Uncategorized',
-    'version': '0.1',
+    'category': 'Document Management',
+    'version': '15.0.1.0.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'mail', 'nhan_su', 'quan_ly_khach_hang'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/van_ban_den.xml',
-        'views/van_ban_di.xml',
-        'views/loai_van_ban.xml',
+        'data/sequence.xml',
+        'data/category_data.xml',
+        'views/van_ban.xml',
+        'views/van_ban_category.xml',
+        'views/van_ban_template.xml',
+        'views/customer_van_ban.xml',
+        'views/reports.xml',
         'views/menu.xml',
+        'data/demo.xml',
     ],
+    
+    'assets': {
+        'web.assets_backend': [
+            'quan_ly_van_ban/static/src/css/custom.css',
+        ],
+    },
+    
     # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
-    ],
+    'demo': [],
+    
+    'application': True,
+    'installable': True,
+    'auto_install': False,
 }
+

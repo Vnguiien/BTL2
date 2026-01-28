@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="view_feedback_form" model="ir.ui.view">
+            <field name="name">feedback.form</field>
+            <field name="model">feedback</field>
+            <field name="arch" type="xml">
+                <form string="Phản hồi khách hàng">
+                    <header>
+                        <field name="state" widget="statusbar" 
+                               statusbar_visible="new,processing,resolved,closed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="feedback_id"/>
+                            <h1>
+                                <field name="feedback_id" placeholder="Mã phản hồi"/>
+                            </h1>
+                            <field name="feedback_name" placeholder="Tiêu đề phản hồi"/>
+                        </div>
+                        <group>
+                            <group string="Thông tin chung">
+                                <field name="customer_id" options="{'no_create': True}"/>
+                                <field name="nhan_vien_id" options="{'no_create': True}"/>
+                                <field name="feedback_date"/>
+                                <field name="feedback_type"/>
+                            </group>
+                            <group string="Đánh giá">
+                                <field name="rating" widget="priority"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Nội dung phản hồi" name="content">
+                                <field name="feedback" placeholder="Nội dung phản hồi từ khách hàng..."/>
+                            </page>
+                            <page string="Phản hồi của công ty" name="response">
+                                <group>
+                                    <field name="response_date"/>
+                                </group>
+                                <field name="response" placeholder="Phản hồi của công ty cho khách hàng..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="view_feedback_tree" model="ir.ui.view">
+            <field name="name">feedback.tree</field>
+            <field name="model">feedback</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách phản hồi" decoration-danger="rating in ['1', '2']"
+                      decoration-success="rating in ['4', '5']">
+                    <field name="feedback_id"/>
+                    <field name="feedback_name"/>
+                    <field name="customer_id"/>
+                    <field name="nhan_vien_id"/>
+                    <field name="feedback_date"/>
+                    <field name="feedback_type"/>
+                    <field name="rating" widget="priority"/>
+                    <field name="state" widget="badge" 
+                           decoration-success="state == 'resolved'"
+                           decoration-warning="state == 'processing'"
+                           decoration-info="state == 'new'"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record model="ir.ui.view" id="feedback_search">
+            <field name="name">feedback.search</field>
+            <field name="model">feedback</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm phản hồi">
+                    <field name="feedback_id"/>
+                    <field name="feedback_name"/>
+                    <field name="customer_id"/>
+                    <field name="nhan_vien_id"/>
+                    <separator/>
+                    <filter string="Mới" name="new" domain="[('state', '=', 'new')]"/>
+                    <filter string="Đang xử lý" name="processing" domain="[('state', '=', 'processing')]"/>
+                    <filter string="Đã giải quyết" name="resolved" domain="[('state', '=', 'resolved')]"/>
+                    <separator/>
+                    <filter string="Đánh giá tốt (4-5 sao)" name="good" domain="[('rating', 'in', ['4', '5'])]"/>
+                    <filter string="Đánh giá kém (1-2 sao)" name="bad" domain="[('rating', 'in', ['1', '2'])]"/>
+                    <separator/>
+                    <group expand="0" string="Nhóm theo">
+                        <filter string="Khách hàng" name="group_customer" context="{'group_by': 'customer_id'}"/>
+                        <filter string="Loại" name="group_type" context="{'group_by': 'feedback_type'}"/>
+                        <filter string="Đánh giá" name="group_rating" context="{'group_by': 'rating'}"/>
+                        <filter string="Trạng thái" name="group_state" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_feedback" model="ir.actions.act_window">
+            <field name="name">Phản hồi khách hàng</field>
+            <field name="res_model">feedback</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="feedback_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo phản hồi mới
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

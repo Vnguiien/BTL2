@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sequence cho Khách hàng -->
+    <record id="seq_customer_id" model="ir.sequence">
+        <field name="name">Mã Khách Hàng</field>
+        <field name="code">customer.id</field>
+        <field name="prefix">KH</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <!-- Sequence cho Cơ hội -->
+    <record id="seq_crm_lead" model="ir.sequence">
+        <field name="name">Mã Cơ Hội</field>
+        <field name="code">crm_lead.sequence</field>
+        <field name="prefix">OPP</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <!-- Sequence cho Tương tác -->
+    <record id="seq_crm_interact" model="ir.sequence">
+        <field name="name">Mã Tương Tác</field>
+        <field name="code">crm_interact.sequence</field>
+        <field name="prefix">INT</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <!-- Sequence cho Hợp đồng -->
+    <record id="seq_contract" model="ir.sequence">
+        <field name="name">Mã Hợp Đồng Khách Hàng</field>
+        <field name="code">contract.sequence</field>
+        <field name="prefix">HDKH</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <!-- Sequence cho Đơn hàng -->
+    <record id="seq_sale_order" model="ir.sequence">
+        <field name="name">Mã Đơn Hàng</field>
+        <field name="code">sale_order.sequence</field>
+        <field name="prefix">DH</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <!-- Sequence cho Báo giá -->
+    <record id="seq_quotation" model="ir.sequence">
+        <field name="name">Mã Báo Giá</field>
+        <field name="code">quotation.sequence</field>
+        <field name="prefix">BG</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <!-- Sequence cho Ghi chú -->
+    <record id="seq_note" model="ir.sequence">
+        <field name="name">Mã Ghi Chú</field>
+        <field name="code">note.sequence</field>
+        <field name="prefix">NOTE</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <!-- Sequence cho Phản hồi -->
+    <record id="seq_feedback" model="ir.sequence">
+        <field name="name">Mã Phản Hồi</field>
+        <field name="code">feedback.sequence</field>
+        <field name="prefix">FB</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <!-- Sequence cho Nhiệm vụ -->
+    <record id="seq_project_task" model="ir.sequence">
+        <field name="name">Mã Nhiệm Vụ</field>
+        <field name="code">project_task.sequence</field>
+        <field name="prefix">TASK</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <!-- Sequence cho Chiến dịch Marketing -->
+    <record id="seq_marketing_campaign" model="ir.sequence">
+        <field name="name">Mã Chiến Dịch Marketing</field>
+        <field name="code">marketing_campaign.sequence</field>
+        <field name="prefix">MKT</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+</odoo>

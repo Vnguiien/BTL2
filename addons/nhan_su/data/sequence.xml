@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sequence cho Nhân viên -->
+    <record id="seq_nhan_vien" model="ir.sequence">
+        <field name="name">Mã Nhân Viên</field>
+        <field name="code">nhan_vien.sequence</field>
+        <field name="prefix">NV</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <!-- Sequence cho Hợp đồng lao động -->
+    <record id="seq_hop_dong_lao_dong" model="ir.sequence">
+        <field name="name">Mã Hợp Đồng Lao Động</field>
+        <field name="code">hop_dong_lao_dong.sequence</field>
+        <field name="prefix">HDLD</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+</odoo>

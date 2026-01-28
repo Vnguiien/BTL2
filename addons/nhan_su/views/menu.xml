@@ -1,53 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <!-- Root Menu -->
         <menuitem
             id="menu_root"
-            name="QLNS"
-            sequence="0"/>
-          
-        <menuitem name="Quản lý nhân viên" 
-            id="menu_nhan_vien" 
+            name="Quản lý Nhân sự"
+            web_icon="nhan_su,static/description/icon.png"
+            sequence="10"/>
+        
+        <!-- Sub-menu: Nhân sự -->
+        <menuitem 
+            id="menu_hr_main" 
+            name="Nhân sự" 
             parent="menu_root" 
+            sequence="1"/>
+        
+        <menuitem name="Nhân viên" 
+            id="menu_nhan_vien" 
+            parent="menu_hr_main" 
             sequence="1"
             action="action_nhan_vien"
         />
 
-        <menuitem name="Danh mục chung" 
-            id="menu_danh_muc_chung" 
-            parent="menu_root" 
-            sequence="1"
+        <menuitem name="Hợp đồng lao động" 
+            id="menu_hop_dong" 
+            parent="menu_hr_main" 
+            sequence="2"
+            action="action_hop_dong_lao_dong"
+        />
+        
+        <menuitem name="Hợp đồng sắp hết hạn" 
+            id="menu_hop_dong_sap_het_han" 
+            parent="menu_hr_main" 
+            sequence="3"
+            action="action_hop_dong_sap_het_han"
         />
 
-        <menuitem name="Danh mục đơn vị" 
-            id="menu_don_vi" 
-            parent="menu_danh_muc_chung" 
+        <!-- Sub-menu: Cấu trúc tổ chức -->
+        <menuitem 
+            id="menu_org_structure" 
+            name="Cấu trúc tổ chức" 
+            parent="menu_root" 
+            sequence="2"/>
+
+        <menuitem name="Phòng ban" 
+            id="menu_phong_ban" 
+            parent="menu_org_structure" 
             sequence="1"
-            action="action_don_vi"
+            action="action_phong_ban"
         />
-        <menuitem name="Danh mục chức vụ" 
+
+        <menuitem name="Chức vụ" 
             id="menu_chuc_vu" 
-            parent="menu_danh_muc_chung" 
+            parent="menu_org_structure" 
             sequence="2"
             action="action_chuc_vu"
         />
-        <menuitem name="Danh mục chứng chỉ, bằng cấp" 
-            id="menu_chung_chi_bang_cap" 
-            parent="menu_danh_muc_chung" 
+
+        <!-- Sub-menu: Lịch sử -->
+        <menuitem 
+            id="menu_history" 
+            name="Lịch sử" 
+            parent="menu_root" 
+            sequence="3"/>
+
+        <menuitem name="Lịch sử làm việc" 
+            id="menu_lich_su_lam_viec" 
+            parent="menu_history" 
+            sequence="1"
+            action="action_lich_su_lam_viec"
+        />
+
+        <!-- Sub-menu: Báo cáo -->
+        <menuitem 
+            id="menu_reports" 
+            name="Báo cáo" 
+            parent="menu_root" 
+            sequence="10"/>
+
+        <menuitem name="Dashboard Nhân sự" 
+            id="menu_hr_dashboard" 
+            parent="menu_reports" 
+            sequence="0"
+            action="action_hr_dashboard"
+        />
+
+        <menuitem name="Nhân viên theo Phòng ban" 
+            id="menu_report_nv_phong_ban" 
+            parent="menu_reports" 
+            sequence="1"
+            action="action_report_nhan_vien_phong_ban"
+        />
+
+        <menuitem name="Hợp đồng theo Trạng thái" 
+            id="menu_report_hop_dong" 
+            parent="menu_reports" 
+            sequence="2"
+            action="action_report_hop_dong_trang_thai"
+        />
+
+        <menuitem name="Tổng lương nhân viên" 
+            id="menu_report_luong" 
+            parent="menu_reports" 
             sequence="3"
-            action="action_chung_chi_bang_cap"
+            action="action_report_luong_phong_ban"
         />
-        <menuitem name="Lịch sử công tác" 
-            id="menu_lich_su_cong_tac" 
-            parent="menu_root" 
+
+        <menuitem name="Thống kê tuổi nhân viên" 
+            id="menu_report_tuoi" 
+            parent="menu_reports" 
             sequence="4"
-            action="action_lich_su_cong_tac"
+            action="action_report_nhan_vien_tuoi"
         />
-        <menuitem name="Danh sách chứng chỉ, bằng cấp" 
-            id="menu_danh_sach_chung_chi_bang_cap" 
-            parent="menu_root" 
-            sequence="4"
-            action="action_danh_sach_chung_chi_bang_cap"
+
+        <menuitem name="Thống kê giới tính" 
+            id="menu_report_gioi_tinh" 
+            parent="menu_reports" 
+            sequence="5"
+            action="action_report_nhan_vien_gioi_tinh"
         />
+
     </data>
 </odoo>

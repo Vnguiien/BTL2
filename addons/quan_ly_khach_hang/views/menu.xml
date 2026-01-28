@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Root Menu -->
+        <menuitem
+            id="menu_root"
+            name="Quản lý Khách hàng"
+            web_icon="quan_ly_khach_hang,static/description/icon.png"
+            sequence="20"/>
+        
+        <!-- Sub-menu: Khách hàng -->
+        <menuitem 
+            id="menu_crm_main" 
+            name="Khách hàng" 
+            parent="menu_root" 
+            sequence="1"/>
+        
+        <menuitem name="Danh sách khách hàng" 
+            id="menu_customer" 
+            parent="menu_crm_main" 
+            sequence="1"
+            action="action_customer"
+        />
+        
+        <menuitem name="Cơ hội bán hàng" 
+            id="menu_crm_lead" 
+            parent="menu_crm_main" 
+            sequence="2"
+            action="action_crm_lead"
+        />
+        
+        <menuitem name="Tương tác" 
+            id="menu_crm_interact" 
+            parent="menu_crm_main" 
+            sequence="3"
+            action="action_crm_interact"
+        />
+
+        <!-- Sub-menu: Báo giá & Đơn hàng -->
+        <menuitem 
+            id="menu_sales" 
+            name="Bán hàng" 
+            parent="menu_root" 
+            sequence="2"/>
+        
+        <menuitem name="Báo giá" 
+            id="menu_quotation" 
+            parent="menu_sales" 
+            sequence="1"
+            action="action_quotation"
+        />
+        
+        <menuitem name="Đơn hàng" 
+            id="menu_sale_order" 
+            parent="menu_sales" 
+            sequence="2"
+            action="action_sale_order"
+        />
+        
+        <menuitem name="Hợp đồng" 
+            id="menu_contract" 
+            parent="menu_sales" 
+            sequence="3"
+            action="action_contract"
+        />
+
+        <!-- Sub-menu: Hoạt động -->
+        <menuitem 
+            id="menu_activities" 
+            name="Hoạt động" 
+            parent="menu_root" 
+            sequence="3"/>
+        
+        <menuitem name="Nhiệm vụ" 
+            id="menu_project_task" 
+            parent="menu_activities" 
+            sequence="1"
+            action="action_project_task"
+        />
+        
+        <menuitem name="Ghi chú" 
+            id="menu_note" 
+            parent="menu_activities" 
+            sequence="2"
+            action="action_note"
+        />
+
+        <!-- Sub-menu: Phản hồi & Marketing -->
+        <menuitem 
+            id="menu_marketing" 
+            name="Marketing" 
+            parent="menu_root" 
+            sequence="4"/>
+        
+        <menuitem name="Phản hồi khách hàng" 
+            id="menu_feedback" 
+            parent="menu_marketing" 
+            sequence="1"
+            action="action_feedback"
+        />
+        
+        <menuitem name="Chiến dịch Marketing" 
+            id="menu_marketing_campaign" 
+            parent="menu_marketing" 
+            sequence="2"
+            action="action_marketing_campaign"
+        />
+
+        <!-- Sub-menu: Dashboard & Báo cáo -->
+        <menuitem 
+            id="menu_crm_reports" 
+            name="Báo cáo &amp; Thống kê" 
+            parent="menu_root" 
+            sequence="5"/>
+
+        <menuitem name="Dashboard CRM" 
+            id="menu_crm_dashboard" 
+            parent="menu_crm_reports" 
+            sequence="0"
+            action="action_crm_dashboard"
+        />
+
+        <menuitem name="Pipeline Cơ hội" 
+            id="menu_report_pipeline" 
+            parent="menu_crm_reports" 
+            sequence="1"
+            action="action_report_crm_pipeline"
+        />
+
+        <menuitem name="Doanh thu theo Khách hàng" 
+            id="menu_report_revenue_customer" 
+            parent="menu_crm_reports" 
+            sequence="2"
+            action="action_report_revenue_customer"
+        />
+
+        <menuitem name="Doanh thu theo Loại HĐ" 
+            id="menu_report_revenue_type" 
+            parent="menu_crm_reports" 
+            sequence="3"
+            action="action_report_revenue_type"
+        />
+
+        <menuitem name="Khách hàng theo Loại" 
+            id="menu_report_customer_type" 
+            parent="menu_crm_reports" 
+            sequence="4"
+            action="action_report_customer_type"
+        />
+
+        <menuitem name="Khách hàng theo Trạng thái" 
+            id="menu_report_customer_status" 
+            parent="menu_crm_reports" 
+            sequence="5"
+            action="action_report_customer_status"
+        />
+
+        <menuitem name="Đơn hàng theo Trạng thái" 
+            id="menu_report_order_state" 
+            parent="menu_crm_reports" 
+            sequence="6"
+            action="action_report_sale_order_state"
+        />
+
+        <menuitem name="Đơn hàng theo Thanh toán" 
+            id="menu_report_payment" 
+            parent="menu_crm_reports" 
+            sequence="7"
+            action="action_report_sale_payment"
+        />
+
+        <menuitem name="Báo giá theo Trạng thái" 
+            id="menu_report_quotation" 
+            parent="menu_crm_reports" 
+            sequence="8"
+            action="action_report_quotation_state"
+        />
+
+        <menuitem name="Phản hồi theo Đánh giá" 
+            id="menu_report_feedback_rating" 
+            parent="menu_crm_reports" 
+            sequence="9"
+            action="action_report_feedback_rating"
+        />
+
+        <menuitem name="Phản hồi theo Loại" 
+            id="menu_report_feedback_type" 
+            parent="menu_crm_reports" 
+            sequence="10"
+            action="action_report_feedback_type"
+        />
+
+        <menuitem name="Nhiệm vụ theo Trạng thái" 
+            id="menu_report_task_state" 
+            parent="menu_crm_reports" 
+            sequence="11"
+            action="action_report_task_state"
+        />
+
+        <menuitem name="Nhiệm vụ theo Độ ưu tiên" 
+            id="menu_report_task_priority" 
+            parent="menu_crm_reports" 
+            sequence="12"
+            action="action_report_task_priority"
+        />
+
+        <menuitem name="Chiến dịch theo Trạng thái" 
+            id="menu_report_campaign_state" 
+            parent="menu_crm_reports" 
+            sequence="13"
+            action="action_report_campaign_state"
+        />
+
+        <menuitem name="Ngân sách Chiến dịch" 
+            id="menu_report_campaign_budget" 
+            parent="menu_crm_reports" 
+            sequence="14"
+            action="action_report_campaign_budget"
+        />
+
+        <!-- Sub-menu: Cấu hình -->
+        <menuitem 
+            id="menu_config" 
+            name="Cấu hình" 
+            parent="menu_root" 
+            sequence="10"/>
+        
+        <menuitem name="Giai đoạn cơ hội" 
+            id="menu_crm_stage" 
+            parent="menu_config" 
+            sequence="1"
+            action="action_crm_stage"
+        />
+    </data>
+</odoo>

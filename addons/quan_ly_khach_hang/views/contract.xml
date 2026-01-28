@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="view_contract_form" model="ir.ui.view">
+            <field name="name">contract.form</field>
+            <field name="model">contract</field>
+            <field name="arch" type="xml">
+                <form string="Hợp đồng khách hàng">
+                    <header>
+                        <button name="action_send_for_signature" string="Gửi ký" type="object" 
+                                class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_activate" string="Kích hoạt" type="object" 
+                                class="btn-success" attrs="{'invisible': [('state', '!=', 'pending')]}"/>
+                        <button name="action_end" string="Kết thúc" type="object" 
+                                class="btn-warning" attrs="{'invisible': [('state', '!=', 'active')]}"/>
+                        <button name="action_cancel" string="Hủy" type="object" 
+                                attrs="{'invisible': [('state', 'not in', ['draft', 'pending'])]}"/>
+                        <button name="action_draft" string="Về nháp" type="object" 
+                                attrs="{'invisible': [('state', '!=', 'cancelled')]}"/>
+                        <field name="state" widget="statusbar" 
+                               statusbar_visible="draft,pending,active,ended"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Sắp hết hạn" bg_color="bg-warning" 
+                                attrs="{'invisible': [('is_expiring_soon', '=', False)]}"/>
+                        <div class="oe_title">
+                            <label for="contract_id"/>
+                            <h1>
+                                <field name="contract_id" placeholder="Mã hợp đồng"/>
+                            </h1>
+                            <h2>
+                                <field name="contract_name" placeholder="Tên hợp đồng"/>
+                            </h2>
+                        </div>
+                        <group>
+                            <group string="Thông tin chung">
+                                <field name="customer_id" options="{'no_create': True}"/>
+                                <field name="nhan_vien_id" options="{'no_create': True}"/>
+                                <field name="contract_type"/>
+                                <field name="quotation_id" options="{'no_create': True}"/>
+                            </group>
+                            <group string="Thời gian">
+                                <field name="sign_date"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="days_remaining" attrs="{'invisible': [('end_date', '=', False)]}"/>
+                                <field name="is_expiring_soon" invisible="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Giá trị">
+                                <field name="contract_value" widget="monetary"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="payment_term"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Điều khoản" name="terms">
+                                <field name="terms" placeholder="Các điều khoản của hợp đồng..."/>
+                            </page>
+                            <page string="File đính kèm" name="attachments">
+                                <group>
+                                    <field name="file_attachment" filename="file_name"/>
+                                    <field name="file_name" invisible="1"/>
+                                </group>
+                            </page>
+                            <page string="Ghi chú" name="notes">
+                                <field name="notes" placeholder="Ghi chú thêm..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="view_contract_tree" model="ir.ui.view">
+            <field name="name">contract.tree</field>
+            <field name="model">contract</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách hợp đồng" decoration-danger="is_expiring_soon == True" 
+                      decoration-muted="state in ['ended', 'cancelled']">
+                    <field name="contract_id"/>
+                    <field name="contract_name"/>
+                    <field name="customer_id"/>
+                    <field name="nhan_vien_id"/>
+                    <field name="contract_type"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="contract_value" widget="monetary"/>
+                    <field name="days_remaining"/>
+                    <field name="state" widget="badge" 
+                           decoration-success="state == 'active'"
+                           decoration-warning="state == 'pending'"
+                           decoration-danger="state == 'ended'"/>
+                    <field name="is_expiring_soon" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record model="ir.ui.view" id="contract_search">
+            <field name="name">contract.search</field>
+            <field name="model">contract</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm hợp đồng">
+                    <field name="contract_id"/>
+                    <field name="contract_name"/>
+                    <field name="customer_id"/>
+                    <field name="nhan_vien_id"/>
+                    <separator/>
+                    <filter string="Đang hoạt động" name="active" domain="[('state', '=', 'active')]"/>
+                    <filter string="Sắp hết hạn" name="expiring" domain="[('is_expiring_soon', '=', True)]"/>
+                    <filter string="Đã kết thúc" name="ended" domain="[('state', '=', 'ended')]"/>
+                    <separator/>
+                    <group expand="0" string="Nhóm theo">
+                        <filter string="Khách hàng" name="group_customer" context="{'group_by': 'customer_id'}"/>
+                        <filter string="Nhân viên" name="group_employee" context="{'group_by': 'nhan_vien_id'}"/>
+                        <filter string="Loại HĐ" name="group_type" context="{'group_by': 'contract_type'}"/>
+                        <filter string="Trạng thái" name="group_state" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_contract" model="ir.actions.act_window">
+            <field name="name">Hợp đồng khách hàng</field>
+            <field name="res_model">contract</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="contract_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo hợp đồng mới
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,40 +1,56 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "nhan_su",
+    'name': "Quản lý Nhân sự",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Module quản lý nhân sự toàn diện cho doanh nghiệp""",
 
     'description': """
-        Long description of module's purpose
+        Module Quản lý Nhân sự cung cấp các tính năng:
+        
+        * Quản lý thông tin nhân viên đầy đủ
+        * Quản lý phòng ban với cấu trúc phân cấp
+        * Quản lý chức vụ và mức lương
+        * Quản lý hợp đồng lao động
+        * Theo dõi lịch sử làm việc
+        * Tích hợp với các module khác trong hệ thống
     """,
 
-    'author': "My Company",
+    'author': "Doanh nghiệp",
     'website': "http://www.yourcompany.com",
+    'license': 'LGPL-3',
 
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
-    'category': 'Uncategorized',
-    'version': '0.1',
+    'category': 'Human Resources',
+    'version': '15.0.1.0.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'mail'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/chuc_vu.xml',
-        'views/don_vi.xml',
+        'data/sequence.xml',
         'views/nhan_vien.xml',
-        'views/lich_su_cong_tac.xml',
-        'views/chung_chi_bang_cap.xml',
-        'views/danh_sach_chung_chi_bang_cap.xml',
+        'views/lich_su_lam_viec.xml',
+        'views/chuc_vu.xml',
+        'views/phong_ban.xml',
+        'views/hop_dong_lao_dong.xml',
+        'views/reports.xml',
         'views/menu.xml',
+        'data/demo.xml',  # Dữ liệu mẫu
     ],
+    
+    'assets': {
+        'web.assets_backend': [
+            'nhan_su/static/src/css/custom.css',
+        ],
+    },
+    
     # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
-    ],
+    'demo': [],
+    
+    'application': True,
+    'installable': True,
+    'auto_install': False,
 }
+

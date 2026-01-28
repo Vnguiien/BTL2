@@ -1,50 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <!-- Form View -->
         <record id="view_chuc_vu_form" model="ir.ui.view">
-            <field name="name">chuc_vu</field>
+            <field name="name">chuc_vu.form</field>
             <field name="model">chuc_vu</field>
             <field name="arch" type="xml">
-                <form>
+                <form string="Chức vụ">
                     <sheet>
-                        <div class="oe_read_only" style="font-size:25px">Chức vụ</div>
-                        <group col="4" string="Thông tin chung">
-                            <field name="ma_chuc_vu"/>
-                            <field name="ten_chuc_vu"/>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="%(nhan_su.action_nhan_vien)d" type="action" 
+                                    class="oe_stat_button" icon="fa-users"
+                                    context="{'search_default_chuc_vu_id': active_id}">
+                                <field name="so_luong_nhan_vien" widget="statinfo" string="Nhân viên"/>
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" 
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+                        <div class="oe_title">
+                            <label for="ma_chuc_vu"/>
+                            <h1>
+                                <field name="ma_chuc_vu" placeholder="Mã chức vụ"/>
+                            </h1>
+                            <h2>
+                                <field name="ten_chuc_vu" placeholder="Tên chức vụ"/>
+                            </h2>
+                        </div>
+                        <group>
+                            <group string="Thông tin cấp bậc">
+                                <field name="cap_bac"/>
+                                <field name="sequence"/>
+                                <field name="active" invisible="1"/>
+                            </group>
+                            <group string="Thông tin lương">
+                                <field name="muc_luong_co_ban" widget="monetary"/>
+                                <field name="phu_cap" widget="monetary"/>
+                            </group>
                         </group>
+                        <group string="Phòng ban áp dụng">
+                            <field name="phong_ban_ids" widget="many2many_tags" nolabel="1"
+                                   placeholder="Để trống nếu áp dụng cho tất cả"/>
+                        </group>
+                        <group string="Mô tả công việc">
+                            <field name="mo_ta" nolabel="1" placeholder="Mô tả chi tiết về chức vụ..."/>
+                        </group>
+                        <notebook>
+                            <page string="Danh sách nhân viên" name="employees">
+                                <field name="nhan_vien_ids">
+                                    <tree>
+                                        <field name="ma_dinh_danh"/>
+                                        <field name="ho_ten"/>
+                                        <field name="phong_ban_id"/>
+                                        <field name="email"/>
+                                        <field name="so_dien_thoai"/>
+                                        <field name="trang_thai" widget="badge"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
         </record>
 
+        <!-- Tree View -->
         <record id="view_chuc_vu_tree" model="ir.ui.view">
-            <field name="name">chuc_vu</field>
+            <field name="name">chuc_vu.tree</field>
             <field name="model">chuc_vu</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree string="Danh sách chức vụ">
+                    <field name="sequence" widget="handle"/>
                     <field name="ma_chuc_vu"/>
                     <field name="ten_chuc_vu"/>
+                    <field name="cap_bac"/>
+                    <field name="muc_luong_co_ban" widget="monetary"/>
+                    <field name="phu_cap" widget="monetary"/>
+                    <field name="so_luong_nhan_vien"/>
                 </tree>
             </field>
         </record>
 
+        <!-- Search View -->
         <record model="ir.ui.view" id="chuc_vu_search">
+            <field name="name">chuc_vu.search</field>
             <field name="model">chuc_vu</field>
             <field name="arch" type="xml">
-                <search>
+                <search string="Tìm kiếm chức vụ">
                     <field name="ma_chuc_vu"/>
                     <field name="ten_chuc_vu"/>
+                    <separator/>
+                    <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                    <separator/>
+                    <group expand="0" string="Nhóm theo">
+                        <filter string="Cấp bậc" name="group_level" context="{'group_by': 'cap_bac'}"/>
+                    </group>
                 </search>
             </field>
         </record>
 
+        <!-- Action -->
         <record id="action_chuc_vu" model="ir.actions.act_window">
             <field name="name">Chức vụ</field>
             <field name="res_model">chuc_vu</field>
             <field name="view_mode">tree,form</field>
-            <field name="search_view_id" ref = "chuc_vu_search"/>
+            <field name="search_view_id" ref="chuc_vu_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo chức vụ mới
+                </p>
+            </field>
         </record>
     </data>
 </odoo>
-        
-    

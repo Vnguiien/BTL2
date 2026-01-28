@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Extend Văn bản Form với AI Tab -->
+        <record id="view_van_ban_form_ai" model="ir.ui.view">
+            <field name="name">van_ban.form.ai</field>
+            <field name="model">van_ban</field>
+            <field name="inherit_id" ref="quan_ly_van_ban.view_van_ban_form"/>
+            <field name="arch" type="xml">
+                <!-- Thêm AI button vào header -->
+                <xpath expr="//header" position="inside">
+                    <button name="action_ai_summarize" type="object" 
+                            string="AI Tóm tắt" class="btn-secondary"/>
+                </xpath>
+                
+                <!-- Thêm Tab AI Assistant -->
+                <xpath expr="//notebook" position="inside">
+                    <page string="AI Assistant" name="ai_assistant">
+                        <group>
+                            <div class="alert alert-info" role="alert">
+                                <strong>AI Assistant</strong> - Trợ lý xử lý văn bản thông minh:
+                                <ul class="mb-0">
+                                    <li>Tóm tắt nội dung văn bản dài</li>
+                                    <li>Phân loại văn bản tự động</li>
+                                    <li>Trích xuất điểm chính</li>
+                                </ul>
+                            </div>
+                        </group>
+                        <group>
+                            <group>
+                                <button name="action_ai_summarize" type="object" 
+                                        string="AI Tóm tắt" class="btn-primary mb-2"/>
+                                <button name="action_ai_classify" type="object" 
+                                        string="AI Phân loại" class="btn-primary mb-2"/>
+                                <button name="action_ai_extract_key_points" type="object" 
+                                        string="AI Trích xuất điểm chính" class="btn-primary mb-2"/>
+                            </group>
+                            <group>
+                                <field name="ai_last_update" readonly="1"/>
+                                <field name="ai_suggested_category" readonly="1"/>
+                                <button name="action_ai_apply_classification" type="object" 
+                                        string="Áp dụng phân loại" class="btn-secondary"
+                                        attrs="{'invisible': [('ai_suggested_category', '=', False)]}"/>
+                            </group>
+                        </group>
+                        
+                        <group string="Tóm tắt AI">
+                            <field name="ai_summary" nolabel="1" readonly="1"/>
+                        </group>
+                        
+                        <group string="Các điểm chính">
+                            <field name="ai_key_points" nolabel="1" readonly="1"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
